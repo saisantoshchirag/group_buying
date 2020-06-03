@@ -27,7 +27,7 @@
     <div class="container center-align">
       <h1>Register</h1>
 			<div class="row">
-				<form action={% url 'loginmodule_register' %} method="POST" class="col s12">{% csrf_token %}
+				<form action={% url 'Accounts:loginmodule_register' %} method="POST" class="col s12">{% csrf_token %}
 					{{u_form}}
                     		        	<button type="submit" class="btn">Register</button>
 

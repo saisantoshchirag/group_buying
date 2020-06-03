@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group
 def login(request):
 	if request.user.is_authenticated:
 		messages.add_message(request, messages.INFO, 'You are already Logged in.')
-		return HttpResponse('you are logged in')
+		return redirect('home')
 	else:
 		c = {}
 		c.update(csrf(request))
@@ -25,17 +25,17 @@ def auth_view(request):
 	if user is not None:
 		auth.login(request, user)
 		messages.add_message(request, messages.INFO, 'Your are now Logged in.')
-		return HttpResponse('you are logged in')
+		return redirect('home')
 	else:
 		messages.add_message(request, messages.WARNING, 'Invalid Login Credentials.')
-		return HttpResponseRedirect('/loginmodule/auth')
+		return redirect('Accounts:login')
 
 def logout(request):
 	if request.user.is_authenticated:
 		auth.logout(request)
 	messages.add_message(request, messages.INFO, 'You are Successfully Logged Out')
 	messages.add_message(request, messages.INFO, 'Thanks for visiting.')
-	return HttpResponseRedirect('/login')
+	return redirect('Accounts:login')
 
 
 
