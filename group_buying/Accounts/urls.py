@@ -1,13 +1,15 @@
 from django.urls import path
-from Accounts.views import auth_view, register, login, logout
+from Accounts.views import auth_view, signup, signin, logout,activate
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 
 app_name = 'Accounts'
 urlpatterns = [
     path('auth', auth_view, name='auth_view_reg'),
-    path('register', register, name="loginmodule_register"),
-    path('login/', login, name='login'),
+    path('register', signup, name="loginmodule_register"),
+    path('login/',signin, name='login'),
     path('logout/', logout, name='logout'),
-    path('register/', register, name='register'),
+    # url(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',activate, name='activate'),
+    path('activate/<uidb64>/<token>',activate,name='activate')
+    # path( 'register/', register, name='register'),
 ]

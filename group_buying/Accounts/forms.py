@@ -4,13 +4,17 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.core.validators import RegexValidator
 from django.utils.safestring import mark_safe
-
+from django.contrib.auth.forms import UserCreationForm
 choices = [
     ('dealer','dealer'),
     ('user','user'),
-    # ('receptionist','receptionist'),
-    # ('lab_attendant','lab_attendant')
 ]
+
+class SignupForm(UserCreationForm):
+    email = forms.EmailField(max_length=200, help_text='Required')
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
 
 class CustomUserCreationForm(forms.ModelForm):
     print('u form entered')
@@ -18,9 +22,7 @@ class CustomUserCreationForm(forms.ModelForm):
     last_name = forms.CharField(label='', max_length=150, widget=forms.TextInput(attrs={'placeholder': 'Last name'}))
     username = forms.CharField(label='', max_length=150, widget=forms.TextInput(attrs={'placeholder': 'username'}))
     email = forms.EmailField(label='', widget=forms.TextInput(attrs={'placeholder': 'email'}))
-
     password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'create a password'}))
-
     password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 're-enter the password'}))
     choice = forms.ChoiceField(choices=choices)
 

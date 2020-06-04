@@ -1,3 +1,4 @@
+{% load static %}
 {% comment %} {% load static %}
 
 <html>
@@ -56,9 +57,26 @@
 
 </html> {% endcomment %}
 
-<head>
+{% block headblock %}
+    <!--<link rel="icon" href="imageset/favicon.png">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {% comment %} <link rel="stylesheet" href="{% static "css/materialize.min.css" %}"> {% endcomment %}
+    <!--<link rel="stylesheet" href="{% static "css/style.css" %}">-->
+    {% comment %} <script src="{% static "js/jquery-3.2.1.min.js" %}"></script> {% endcomment %}
+    {% comment %} <script src="{% static "js/materialize.min.js" %}"></script> {% endcomment %}
+{% comment %}  {% endcomment %}
+    {% comment %} <script src="{% static "js/script.js" %}"></script> {% endcomment %}
+
     <title>Login </title>
     <style>
+        body {
+        {% comment %} background-image:url('https://www.google.co.in/url?sa=i&url=https%3A%2F%2Fwww.mutualfundswallet.com%2Fplan.php&psig=AOvVaw39kN24akednIy7NfYhro1I&ust=1591283965725000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNDB35r-5ekCFQAAAAAdAAAAABAK'); {% endcomment %}
+        {% comment %} background-color:black; {% endcomment %}
+        }
+
         .login-page {
             width: 360px;
             padding: 8% 0 0;
@@ -249,44 +267,43 @@
 
         }
     </style>
-</head>
+    {% endblock headblock %}
 
-<body>
+    {% block content %}
     <div class="login-page">
         <div class="form">
-            <img src="/media/logo.JPG">
             <br>
-            <form class="login-form form1" method="post" action="{% url 'Accounts:login' %}">
+            <form class="login-form form1" method="post" action="/loginmodule/auth" autocomplete='off'>
                 {% csrf_token %}
                 <div class="row">
                     <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input type="text" name="username" id="username" class="validate">
-                        <label for="username">Username</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">vpn_key</i>
-                        <input type="password" name="password" class="validate" id="password">
-                        <label for="password">Password</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <button type="submit" class="btn">Login</button>
 
+                        <label for="username" style="float:left">Username</label>
 
+                        <input type="text" name="username" autocomplete="off" id="username" readonly onfocus="this.removeAttribute('readonly');">
+                        <input type="email" name="email" autocomplete="off" id="username" readonly onfocus="this.removeAttribute('readonly');">
+                        
                     </div>
+                    <br>
+                    <div class="input-field col s12">
+                        {% comment %} <i class="material-icons prefix">vpn_key</i> {% endcomment %}
+                        <label for="password" style="float:left">Password</label>
+
+                        <input type="password" name="password" class="validate" id="password" autocomplete="off">
+                    </div>
+
 
                 </div>
                 <button class="loginpage-loginbutton">Login</button><br><br>
                 <a href="" style="color: #28a745; text-decoration: none">Forgot/reset password? </a>
-                <p class="message">Not registered? <Create an account</p> <p class="message1"> Login as as Trainer</p>
-                <br>
-                <br><br>
-                <hr>
+                <p class="message">Not registered? <a href="{% url 'Accounts:loginmodule_register' %}">Create an account</a></p>  <br>
+                        <br><br>
+                        <hr>
             </form>
             {% comment %} <a href="{% url 'social:begin' 'facebook' %}"> <button class="loginBtn loginBtn--facebook">
                     {% endcomment %}
-                    Login with Facebook
+
                 </button></a>
         </div>
     </div>
-</body>
+    {% endblock content %}

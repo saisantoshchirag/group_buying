@@ -1,4 +1,4 @@
-{% load static from staticfiles %}
+{% load static  %}
 <!DOCTYPE html>
 <html>
 
@@ -60,13 +60,9 @@
         }
 
 
-            {
-            % block style %
-        }
+            {% block style %}
 
-            {
-            % endblock style %
-        }
+            {% endblock style %}
     </style>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"
