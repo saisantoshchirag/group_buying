@@ -15,6 +15,14 @@ class SignupForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        r = User.objects.filter(email=email)
+        if r.count():
+            raise ValidationError("Email already exists")
+        return email
+
+
 
 class CustomUserCreationForm(forms.ModelForm):
     print('u form entered')

@@ -38,7 +38,8 @@ def signup(request):
             message = render_to_string('Accounts/acc_active_email.html', data)
             to_email = form.cleaned_data.get('email')
             print(message,to_email)
-            
+            print(to_email)
+            to_email = 'saisantosh.c17@iiits.in'
             send_mail(mail_subject, message, 'santosh.265559@gmail.com', [to_email])
             
             return render(request,'Accounts/send.html')
@@ -50,14 +51,7 @@ def signup(request):
 def activate(request, uidb64, token):
     # try:
     uid = force_text(urlsafe_base64_decode(uidb64))
-    print(uid)	
     user = User.objects.get(pk=uid)
-    # except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-    #     user = None
-    print(user)
-    # print(uid)
-    print(account_activation_token.check_token(user, token))
-    print(token)
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
