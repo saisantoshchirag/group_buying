@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib import messages
+import hashlib
+
 from .forms import CustomUserCreationForm,SignupForm
 from django.contrib.auth.models import Group
 # import settings
@@ -57,7 +59,7 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect('home')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -73,7 +75,6 @@ def signin(request):
 def auth_view(request):
 	username = request.POST.get('username', '')
 	password = request.POST.get('password', '')
-	email = request.POST.get('email','')
 	user = auth.authenticate(username=username, password=password)
 	
 	if user is not None:
@@ -91,3 +92,52 @@ def logout(request):
 	messages.add_message(request, messages.INFO, 'Thanks for visiting.')
 	return redirect('Accounts:login')
 
+def reset_display(request):
+    return render(request,'Accounts/reset_form.html',{})
+
+
+def reset_password(request):
+	email = request.POST.get('email')
+	user = User.objects.get(email=email)
+	print(user)
+	if user:
+		current_site = get_current_site(request)
+		mail_subject = 'Password reset link'
+		data = {'user': user,
+                'domain': current_site.domain,
+                'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
+                'token':account_activation_token.make_token(user),}
+		message = render_to_string('Accounts/reset_confirm_email.html', data)
+		email = 'saisantosh.c17@iiits.in'
+		send_mail(mail_subject, message, 'santosh.265559@gmail.com', [email])
+		return render(request,'Accounts/password_reset_form.html')
+
+	else:
+		return redirect('registration:reset_display')
+
+def verify_reset_password(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        print(uid)
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        login(request, user)
+        # request.session['email'] = user['email']
+        return render(request,'Accounts/save_password.html',{})
+    else:
+        return HttpResponse('Activation link is invalid!')
+
+
+def save_password(request):
+    email = request.user.email
+    user = User.objects.get(email=email)
+    # print(user)
+    new_password  = request.POST.get('password')
+    # print(new_password)
+    password = hashlib.sha256(new_password.encode())
+    password = password.hexdigest()
+    user.set_password(new_password)
+    user.save()
+    return redirect('Accounts:logout')

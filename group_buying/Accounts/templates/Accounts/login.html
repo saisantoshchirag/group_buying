@@ -281,7 +281,7 @@
                         <label for="username" style="float:left">Username</label>
 
                         <input type="text" name="username" autocomplete="off" id="username" readonly onfocus="this.removeAttribute('readonly');">
-                        <input type="email" name="email" autocomplete="off" id="username" readonly onfocus="this.removeAttribute('readonly');">
+                        {% comment %} <input type="email" name="email" autocomplete="off" id="username" readonly onfocus="this.removeAttribute('readonly');"> {% endcomment %}
                         
                     </div>
                     <br>
@@ -295,7 +295,7 @@
 
                 </div>
                 <button class="loginpage-loginbutton">Login</button><br><br>
-                <a href="" style="color: #28a745; text-decoration: none">Forgot/reset password? </a>
+                <a href="{% url 'Accounts:reset_display' %}" style="color: #28a745; text-decoration: none">Forgot/reset password? </a>
                 <p class="message">Not registered? <a href="{% url 'Accounts:loginmodule_register' %}">Create an account</a></p>  <br>
                         <br><br>
                         <hr>
