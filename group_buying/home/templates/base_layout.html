@@ -85,14 +85,14 @@
 
         {% if not request.user.username %}
 
-        <a href="{% url 'Accounts:login' %}"><button class="button2">Login</button></a>
-        <a href="{% url 'Accounts:loginmodule_register' %}"><button class="button2" name="Login" value="Login">
+        <a href="{% url 'login' %}"><button class="button2">Login</button></a>
+        <a href="{% url 'loginmodule_register' %}"><button class="button2" name="Login" value="Login">
                 Signup</button></a>
 
     </div>
     {% else %}
 
-    <form class="button2" action="{% url 'Accounts:logout' %}" method="post">
+    <form class="button2" action="{% url 'logout' %}" method="post">
         {% csrf_token %}
         <button type="submit" class="logout-button-nav"
             style="background-color: transparent;color: #FFFFFF; border: none;">Logout </button>

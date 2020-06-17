@@ -47,7 +47,7 @@
                      class="mx-auto">
             </div>
             <div class="col-6">
-                <form action="{% url 'Accounts:reset_password' %}" method="POST">
+                <form action="{% url 'reset_password' %}" method="POST">
                     <p class="display-3">Enter email to which link will be sent </p>
                     {% csrf_token %}
 					    <label class="display-5">Email :</label><input type="email" name="email" class="form-control"><br>

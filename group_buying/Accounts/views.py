@@ -6,7 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib import messages
 import hashlib
 
-from .forms import CustomUserCreationForm,SignupForm
+from .forms import SignupForm
 from django.contrib.auth.models import Group
 # import settings
 from django.http import HttpResponse
@@ -83,14 +83,14 @@ def auth_view(request):
 		return redirect('home')
 	else:
 		messages.add_message(request, messages.WARNING, 'Invalid Login Credentials.')
-		return redirect('Accounts:login')
+		return redirect('login')
 
 def logout(request):
 	if request.user.is_authenticated:
 		auth.logout(request)
 	messages.add_message(request, messages.INFO, 'You are Successfully Logged Out')
 	messages.add_message(request, messages.INFO, 'Thanks for visiting.')
-	return redirect('Accounts:login')
+	return redirect('login')
 
 def reset_display(request):
     return render(request,'Accounts/reset_form.html',{})
@@ -140,4 +140,4 @@ def save_password(request):
     password = password.hexdigest()
     user.set_password(new_password)
     user.save()
-    return redirect('Accounts:logout')
+    return redirect('logout')

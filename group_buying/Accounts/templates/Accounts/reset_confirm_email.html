@@ -3,5 +3,5 @@
 
     Hi {{ user }},
 Please click on the link to reset your password
-http://{{ domain }}{% url 'Accounts:verify_reset_password' uidb64=uid token=token %}
+http://{{ domain }}{% url 'verify_reset_password' uidb64=uid token=token %}
 {% endautoescape %}

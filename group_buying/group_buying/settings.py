@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'Accounts',
-    'home'
+    'home',
+    'social_django',
+    'allauth',   # <--
+    'allauth.account',   # <--
+    'allauth.socialaccount',   # <--
+    'allauth.socialaccount.providers.google',   # <--
+    'profiles',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
 ]
 
 ROOT_URLCONF = 'group_buying.urls'
@@ -121,7 +130,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,"static"),
+    os.path.join(BASE_DIR, "static"),
 )
 
 
@@ -130,3 +139,28 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'santosh.265559@gmail.com'
 EMAIL_HOST_PASSWORD = 'santoshgoud'
 EMAIL_PORT = 587
+
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
+SITE_ID = 2
+LOGIN_REDIRECT_URL = 'home'
+
+SOCIALACCOUNT_PROVIDERS = {
+'google': {
+    'SCOPE': [
+        'profile',
+        'email',
+    ],
+    'AUTH_PARAMS': {
+        'access_type': 'online',
+    }
+}
+}
+
+# 954938060767-nb172o8gr5ooa8ifuk0felgobl1gm3cf.apps.googleusercontent.com
+# FOzLZCIN08QvClgC-lGScH_E
+SOCIAL_FACEBOOK_AUTH_KEY = 3436195899723875
+SOCIAL_FACEBOOK_AUTH_SECRET = 'e2cff03b774b9ad7f7e0465f4138bff0'
