@@ -22,5 +22,5 @@ urlpatterns = [
     path('loginmodule/', include('Accounts.urls')),
     path('', include('home.urls')),
     # path('accounts/', include('allauth.urls')),  # <--
-    path('profile',include('profiles.urls'))
+    path('profile/',include('profiles.urls'))
 ]

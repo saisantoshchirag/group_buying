@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     # path('update',)
+    path('update',views.update)
 ]
