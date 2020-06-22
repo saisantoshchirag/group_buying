@@ -1,0 +1,34 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block headblock %}
+    <meta charset="UTF-8">
+    <title>bj</title>
+    <link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">
+{#        <link rel="stylesheet" href="{% static "main.css" %}">#}
+
+    <style>
+    h3{
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+    </style>
+{% endblock headblock %}
+{% block content %}
+
+    <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
+    <h3>{{ user.userprofile.city }}</h3>
+    <h3>{{ user.userprofile.state }}</h3>
+    <h3>{{ user.userprofile.phone_number }}</h3>
+    <h3>{{ user.userprofile.pincode }}</h3>
+    <h3>{{ user.userprofile.gender }}</h3>
+    <a href="{% url 'update' %}"><button> Edit Profile</button> </a>
+{#    {% for use in user %}#}
+{#        {{ use.gender }}#}
+{#        {{ use.city }}#}
+{#        {{ use.state }}#}
+{#        {{ use.pincode }}#}
+{#        {{ use.phonenumber }}#}
+{#        <img src="{{ use.image.url }}">#}
+{#    {% endfor %}#}
+{% endblock content %}

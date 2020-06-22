@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Update profile
-</body>
-</html>
+{% extends 'base_layout.html' %}
+{% load static %}
+{% block headblock %}
+{#<link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">#}
+<style>
+.form1{
+    width:200px;
+}
+</style>
+{% endblock headblock %}
+{% block content %}
+
+    <form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit">
+    </form>
+    <br><br>
+    <a href="{% url 'view' %}"><button>View Profile</button></a>
+
+{% endblock content %}
