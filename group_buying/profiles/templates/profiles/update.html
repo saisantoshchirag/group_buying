@@ -1,21 +1,69 @@
 {% extends 'base_layout.html' %}
 {% load static %}
 {% block headblock %}
-{#<link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">#}
-<style>
-.form1{
-    width:200px;
-}
-</style>
+    {#<link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">#}
+    <style>
+        .form1{
+            width:200px;
+        }
+            .btn1 {
+            white-space: normal;
+            background-color: #007d91;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 30px;
+            width: 300px;
+        }
+        .btn1:hover{
+            color:whitesmoke;background-color:black;text-align: center
+
+        }
+
+    </style>
 {% endblock headblock %}
 {% block content %}
-
+<center>
     <form  method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit">
+        {% csrf_token %}
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//geodata.solutions/includes/statecity.js"></script></body>
+        <br>
+        <label for="id_image"> Image </label>
+        <input type="file" name="image" accept="image/*" id="id_image">
+        <br><br>
+        <label for="id_pincode">Pincode</label>
+        <input type="number" name="pincode" value="0" required="" id="id_pincode"><br><br>
+        <label for="id_phone_number">Phone number</label>
+        <input type="text" name="phone_number" class="form1" required="" id="id_phone_number">
+        <br><br>
+        <input type="hidden" name="country" id="countryId" value="IN"/>
+        <label for="cityId">State</label>
+        <select name="state" class="states order-alpha ui search dropdown" id="stateId">
+            <option value="">Select State</option>
+        </select>
+        <label for="cityId"> City </label>
+        <select name="city" class="cities order-alpha" id="cityId">
+            <option value="">Select City</option>
+        </select>
+        <br><br>
+        <label for="id_gender">Gender</label>
+        <select name="gender" required="" id="id_gender">
+            <option value=""> Male </option>
+            <option value=""> Female </option>
+        </select>
+        <br><br>
+        <input type="submit" class="btn1">
+
     </form>
-    <br><br>
-    <a href="{% url 'view' %}"><button>View Profile</button></a>
+    <br>
+    <a href="{% url 'view' %}"><button class="btn1"> View Profile</button></a>
+</center>
 
 {% endblock content %}

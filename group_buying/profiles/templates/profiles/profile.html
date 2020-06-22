@@ -12,17 +12,36 @@
         margin-top: 20px;
         margin-left: 20px;
     }
+            .btn1 {
+            white-space: normal;
+            background-color: #007d91;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 30px;
+            width: 300px;
+        }
+        .btn1:hover{
+            color:whitesmoke;background-color:black;text-align: center
+
+        }
+
     </style>
 {% endblock headblock %}
 {% block content %}
-
+<center>
     <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
     <h3>{{ user.userprofile.city }}</h3>
     <h3>{{ user.userprofile.state }}</h3>
     <h3>{{ user.userprofile.phone_number }}</h3>
     <h3>{{ user.userprofile.pincode }}</h3>
     <h3>{{ user.userprofile.gender }}</h3>
-    <a href="{% url 'update' %}"><button> Edit Profile</button> </a>
+    <a href="{% url 'update' %}"><button class="btn1"> Edit Profile</button> </a>
 {#    {% for use in user %}#}
 {#        {{ use.gender }}#}
 {#        {{ use.city }}#}
@@ -31,4 +50,5 @@
 {#        {{ use.phonenumber }}#}
 {#        <img src="{{ use.image.url }}">#}
 {#    {% endfor %}#}
+</center>
 {% endblock content %}
