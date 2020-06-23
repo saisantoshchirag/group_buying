@@ -10,13 +10,14 @@ from django.core.files.storage import FileSystemStorage
 def update(request):
 
     current_user = UserProfile.objects.filter(user=request.user).values()
-    # UserProfile.objects.create(user=request.user)
-    print(current_user[0])
     cur_gender = current_user[0].get('gender')
     cur_state = current_user[0].get('state')
     cur_pincode = current_user[0].get('pincode')
     cur_city = current_user[0].get('city')
     cur_phone = current_user[0].get('phone_number')
+    print(cur_city)
+    print(cur_pincode)
+    print(cur_state)
     if request.method == 'POST':
         form = UpdateForm(request.POST, request.FILES)
         if form.is_valid():
@@ -38,16 +39,29 @@ def update(request):
             except:
                 UserProfile.objects.filter(user=request.user).update(gender=cur_gender)
             try:
+                print('coty if')
                 UserProfile.objects.filter(user=request.user).update(city=request.POST['city'])
             except:
+                print('cty else')
                 UserProfile.objects.filter(user=request.user).update(city=cur_city)
             try:
+                print('sta if')
                 UserProfile.objects.filter(user=request.user).update(state=request.POST['state'])
+                print(request.POST['state'])
+                print('request')
+
             except:
+                print('sta el')
                 UserProfile.objects.filter(user=request.user).update(state=cur_state)
             try:
+                print('pin if')
                 UserProfile.objects.filter(user=request.user).update(pincode=request.POST['pincode'])
+                print(request.POST['pincode'])
+
+                print('request')
+
             except:
+                print('pin else')
                 UserProfile.objects.filter(user=request.user).update(pincode=cur_pincode)
 
             return redirect('view')
@@ -57,9 +71,7 @@ def update(request):
 
 def profile(request):
     user = UserProfile.objects.filter(user=request.user).values()
-    if user:
-        print(user[0])
-    else:
+    if not user:
         return redirect('create')
     return render(request,'profiles/profile.html',{'user':request.user})
 
@@ -71,8 +83,6 @@ def create(request):
         state = request.POST.get('state')
         gender = request.POST.get('gender')
         image = request.FILES['image']
-        print(pincode)
-        print(phone_number)
         UserProfile.objects.create(image = image,state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
         return redirect('view')
     return render(request,'profiles/create.html')

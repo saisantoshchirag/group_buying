@@ -39,18 +39,18 @@
         <input type="file" name="image" accept="image/*" id="id_image">
         <br><br>
         <label for="id_pincode">Pincode</label>
-        <input type="number" name="pincode" value="0"  id="id_pincode"><br><br>
+        <input type="number" name="pincode"  id="id_pincode"><br><br>
         <label for="id_phone_number">Phone number</label>
         <input type="text" name="phone_number" class="form1"  id="id_phone_number">
         <br><br>
         <input type="hidden" name="country" id="countryId" value="IN"/>
         <label for="cityId">State</label>
         <select name="state" class="states order-alpha ui search dropdown" id="stateId">
-            <option value="">Select State</option>
+            <option selected="true" disabled="disabled">Select State</option>
         </select>
         <label for="cityId"> City </label>
         <select name="city" class="cities order-alpha" id="cityId">
-            <option value="">Select City</option>
+            <option selected="true" disabled="disabled">Select City</option>
         </select>
         <br><br>
         <label for="id_gender">Gender</label>
