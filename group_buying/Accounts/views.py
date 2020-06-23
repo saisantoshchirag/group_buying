@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.template.context_processors import csrf
 from django.contrib import messages
 import hashlib
-
+from profiles.models import UserProfile
 from .forms import SignupForm
 from django.contrib.auth.models import Group
 # import settings
@@ -34,16 +34,16 @@ def signup(request):
             current_site = get_current_site(request)
             mail_subject = 'Activate your blog account.'
             data = {'user': user,
-                'domain': current_site.domain,
-                'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
-                'token':account_activation_token.make_token(user),}
+                    'domain': current_site.domain,
+                    'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
+                    'token':account_activation_token.make_token(user),}
             message = render_to_string('Accounts/acc_active_email.html', data)
             to_email = form.cleaned_data.get('email')
             print(message,to_email)
             print(to_email)
             to_email = 'saisantosh.c17@iiits.in'
             send_mail(mail_subject, message, 'santosh.265559@gmail.com', [to_email])
-            
+
             return render(request,'Accounts/send.html')
     else:
         print('in to the else signup')
@@ -59,61 +59,70 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         # return redirect('home')
-        return redirect('home')
+        return redirect('create')
     else:
         return HttpResponse('Activation link is invalid!')
 
 def signin(request):
-	if request.user.is_authenticated:
-		messages.add_message(request, messages.INFO, 'You are already Logged in.')
-		return redirect('home')
-	else:
-		c = {}
-		c.update(csrf(request))
-		return render(request, 'Accounts/login.html', c)
+    if request.user.is_authenticated:
+        messages.add_message(request, messages.INFO, 'You are already Logged in.')
+        return redirect('home')
+    else:
+        c = {}
+        c.update(csrf(request))
+        return render(request, 'Accounts/login.html', c)
 
 def auth_view(request):
-	username = request.POST.get('username', '')
-	password = request.POST.get('password', '')
-	user = auth.authenticate(username=username, password=password)
-	
-	if user is not None:
-		auth.login(request, user)
-		messages.add_message(request, messages.INFO, 'Your are now Logged in.')
-		return redirect('home')
-	else:
-		messages.add_message(request, messages.WARNING, 'Invalid Login Credentials.')
-		return redirect('login')
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+    if user is not None:
+        auth.login(request, user)
+        messages.add_message(request, messages.INFO, 'Your are now Logged in.')
+        print(request.user)
+        # if request.user not in UserProfile.objects.all():
+        #     print('yes')
+        # else:
+        #     print('no')
+        try:
+            UserProfile.objects.filter(user=request.user)
+        except:
+            print('here in except')
+            return redirect('create')
+        return redirect('home')
+    else:
+        messages.add_message(request, messages.WARNING, 'Invalid Login Credentials.')
+        return redirect('login')
 
 def logout(request):
-	if request.user.is_authenticated:
-		auth.logout(request)
-	messages.add_message(request, messages.INFO, 'You are Successfully Logged Out')
-	messages.add_message(request, messages.INFO, 'Thanks for visiting.')
-	return redirect('login')
+    if request.user.is_authenticated:
+        auth.logout(request)
+    messages.add_message(request, messages.INFO, 'You are Successfully Logged Out')
+    messages.add_message(request, messages.INFO, 'Thanks for visiting.')
+    return redirect('login')
 
 def reset_display(request):
     return render(request,'Accounts/reset_form.html',{})
 
 
 def reset_password(request):
-	email = request.POST.get('email')
-	user = User.objects.get(email=email)
-	print(user)
-	if user:
-		current_site = get_current_site(request)
-		mail_subject = 'Password reset link'
-		data = {'user': user,
+    email = request.POST.get('email')
+    user = User.objects.get(email=email)
+    print(user)
+    if user:
+        current_site = get_current_site(request)
+        mail_subject = 'Password reset link'
+        data = {'user': user,
                 'domain': current_site.domain,
                 'uid':force_text(urlsafe_base64_encode(force_bytes(user.pk))),
                 'token':account_activation_token.make_token(user),}
-		message = render_to_string('Accounts/reset_confirm_email.html', data)
-		email = 'saisantosh.c17@iiits.in'
-		send_mail(mail_subject, message, 'santosh.265559@gmail.com', [email])
-		return render(request,'Accounts/password_reset_form.html')
+        message = render_to_string('Accounts/reset_confirm_email.html', data)
+        email = 'saisantosh.c17@iiits.in'
+        send_mail(mail_subject, message, 'santosh.265559@gmail.com', [email])
+        return render(request,'Accounts/password_reset_form.html')
 
-	else:
-		return redirect('registration:reset_display')
+    else:
+        return redirect('registration:reset_display')
 
 def verify_reset_password(request, uidb64, token):
     try:

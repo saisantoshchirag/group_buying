@@ -1,36 +1,13 @@
 {% extends 'base_layout.html' %}
 {% load static %}
 {% block headblock %}
-    {#<link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">#}
-    <style>
-        .form1{
-            width:200px;
-        }
-            .btn1 {
-            white-space: normal;
-            background-color: #007d91;
-            color: white;
-            font-family: "Roboto", sans-serif;
-            outline: 0;
-            border: 0;
-            margin: 0 0 15px;
-            padding: 15px;
-            box-sizing: border-box;
-            font-size: 14px;
-            border-radius: 30px;
-            width: 300px;
-        }
-        .btn1:hover{
-            color:whitesmoke;background-color:black;text-align: center
 
-        }
-
-    </style>
+<title> Create Profile </title>
 {% endblock headblock %}
+
 {% block content %}
-<center>
-    <form  method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="//geodata.solutions/includes/statecity.js"></script></body>
@@ -63,8 +40,4 @@
         <input type="submit" class="btn1">
 
     </form>
-    <br>
-    <a href="{% url 'view' %}"><button class="btn1"> View Profile</button></a>
-</center>
-
 {% endblock content %}
