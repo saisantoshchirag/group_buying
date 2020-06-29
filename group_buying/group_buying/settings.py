@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',   # <--
     'profiles',
     'allauth.socialaccount.providers.facebook',
-
+    'chat'
 ]
 
 MIDDLEWARE = [

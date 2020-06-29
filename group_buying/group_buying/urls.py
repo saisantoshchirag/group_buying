@@ -24,7 +24,8 @@ urlpatterns = [
     path('loginmodule/', include('Accounts.urls')),
     path('', include('home.urls')),
     # path('accounts/', include('allauth.urls')),  # <--
-    path('profile/',include('profiles.urls'))
+    path('profile/',include('profiles.urls')),
+    path('chat/',include('chat.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
