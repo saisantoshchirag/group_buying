@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from chat.models import ChatRoom
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -10,4 +11,4 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     pincode = models.IntegerField(default=0)
-    # room = models.ForeignKey()
+    room = models.ForeignKey(ChatRoom,on_delete=models.CASCADE,blank=True,null=True)
