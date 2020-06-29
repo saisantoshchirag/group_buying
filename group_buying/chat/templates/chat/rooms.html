@@ -1,0 +1,13 @@
+{% extends 'base_layout.html' %}
+
+{% block headblock %}
+
+{% endblock headblock %}
+
+
+{% block content %}
+        {% for room in rooms %}
+            <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
+{#            {{ room.id }}#}
+        {% endfor %}
+{% endblock content %}

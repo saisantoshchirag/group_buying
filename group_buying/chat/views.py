@@ -1,5 +1,5 @@
 from django.http import  HttpResponseNotAllowed
-from django.db import IntegrityError
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect,reverse
 from .models import ChatRoom, ChatMessage
 from django.http import HttpResponseRedirect,HttpResponse
@@ -84,3 +84,9 @@ def delete(request,room,id):
     ChatMessage.objects.filter(id=id).delete()
     return redirect('home', room_id=room)
 
+def rooms(request):
+    rooms = ChatRoom.objects.all().values()
+    user = User.objects.filter(username=request.user)
+    print(user.values())
+    is_staff = user.values()[0]['is_staff']
+    return render(request,'chat/rooms.html',{'rooms':rooms,'is_staff':is_staff})

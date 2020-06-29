@@ -9,7 +9,7 @@ urlpatterns = [
     path('rooms/<room_id>',views.home,name='home'),
     path('rooms/<room_id>/messages',views.messages,name='message'),
     path('rooms/<room_id>/events/', include(django_eventstream.urls), {'format-channels': ['room-{room_id}']}),
-
+    path('',views.rooms,name='rooms'),
 	# older endpoint allowing client to select channel. not recommended
 	path('/events/', include(django_eventstream.urls)),
     path('delete/<room>/<id>',views.delete,name='delete')

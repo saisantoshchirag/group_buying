@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 class ChatRoom(models.Model):
     eid = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=25)
 class ChatMessage(models.Model):
     id = models.AutoField(primary_key=True,auto_created=True)
     room = models.ForeignKey(ChatRoom,on_delete=models.CASCADE)
