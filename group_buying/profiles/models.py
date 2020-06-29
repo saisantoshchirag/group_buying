@@ -10,3 +10,4 @@ class UserProfile(models.Model):
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
     pincode = models.IntegerField(default=0)
+    # room = models.ForeignKey()

@@ -14,8 +14,8 @@ urlpatterns = [
     path('reset_display/',reset_display,name='reset_display'),
     path('verify_password/<uidb64>/<token>',verify_reset_password,name='verify_reset_password'),
     path('save_password/',save_password,name='save_password'),
-    path('', TemplateView.as_view(template_name='Accounts/index.html')),
-    path('accounts/', include('allauth.urls')),
-    path('social-auth/', include('social_django.urls', namespace="social")),
+    # path('', TemplateView.as_view(template_name='Accounts/index.html')),
+    # path('accounts/', include('allauth.urls')),
+    # path('social-auth/', include('social_django.urls', namespace="social")),
 
 ]

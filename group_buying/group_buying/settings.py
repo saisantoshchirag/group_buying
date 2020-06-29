@@ -41,12 +41,11 @@ INSTALLED_APPS = [
     'Accounts',
     'home',
     'social_django',
-    'allauth',   # <--
-    'allauth.account',   # <--
-    'allauth.socialaccount',   # <--
-    'allauth.socialaccount.providers.google',   # <--
+    # 'allauth',   # <--
+    # 'allauth.account',   # <--
+    # 'allauth.socialaccount',   # <--
+    # 'allauth.socialaccount.providers.google',   # <--
     'profiles',
-    'allauth.socialaccount.providers.facebook',
     'chat'
 ]
 
@@ -145,8 +144,7 @@ EMAIL_PORT = 587
 
 AUTHENTICATION_BACKENDS = (
  'django.contrib.auth.backends.ModelBackend',
- 'allauth.account.auth_backends.AuthenticationBackend',
- 'social_core.backends.facebook.FacebookOAuth2',
+ # 'allauth.account.auth_backends.AuthenticationBackend',
 
 )
 
