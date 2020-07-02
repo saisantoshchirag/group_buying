@@ -1,8 +1,10 @@
 from django.http import  HttpResponseNotAllowed
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect,reverse
-from .models import ChatRoom, ChatMessage
+from .models import ChatRoom, ChatMessage,Car
 from django.http import HttpResponseRedirect,HttpResponse
+import pandas as pd
+from profiles.models import UserProfile
 def home(request, room_id=None):
     user = request.user
     if user:
@@ -58,23 +60,9 @@ def messages(request, room_id):
 
         mfrom = request.POST['from']
         if not any(fields):
-            # response = '<html><script>alert("Enter valid amount");window.location=/rooms/' + str(room_id) + '"";</script></html>'
             print(path)
-
             return HttpResponseRedirect(path)
-            # return H
         ChatMessage.objects.create(room=room,user=mfrom,text=text,document=file,image=img)
-
-        # try:
-        #     ChatMessage.objects.create(room=room,user=mfrom,text=text,image=img)
-        # except:
-        #     try:
-        #         ChatMessage.objects.create(room = room,user=mfrom,text=text,file = file)
-        #     except:
-        #         try:
-        #             ChatMessage.objects.create(room=room,user=mfrom,text=text)
-        #         except:
-        #             return HttpResponse('you need to enter any of the following : message or image or file')
         return redirect('home',room_id=room_id)
     else:
         return HttpResponseNotAllowed(['POST'])
@@ -86,7 +74,31 @@ def delete(request,room,id):
 
 def rooms(request):
     rooms = ChatRoom.objects.all().values()
+    cars = Car.objects.all().values()
     user = User.objects.filter(username=request.user)
-    print(user.values())
     is_staff = user.values()[0]['is_staff']
-    return render(request,'chat/rooms.html',{'rooms':rooms,'is_staff':is_staff})
+    res = []
+    for i in rooms:
+        out = {}
+        for j in cars:
+            if i['id']==j['id']:
+                out = i
+                out.update(j)
+                res.append(out)
+    return render(request,'chat/rooms.html',{'rooms':res,'is_staff':is_staff})
+
+#THis view if for adding more cars to database
+def data(request):
+    file = pd.read_csv('C:\sem-6\group_buying\group_buying\chat\Book1.csv')
+    print(file.columns)
+    for i in range(len(file['id'])):
+        Car.objects.create(name=file['Modelname'][i],brand = file['Brand'][i],version=file['Version'][i],price=file['Price'][i],mileage=file['Milage'][i],fuel_tank_capacity=file['Fuel_tank_capacity'][i],fuel_type=file['Fueltype'],body_style=file['Body_style'])
+    return HttpResponse('success')
+
+def join(request,room_id):
+    # print(room_id)
+    user = User.objects.filter(username=request.user)
+    user1 = UserProfile.objects.filter(user=request.user)
+    print(user)
+    print(user1)
+    return HttpResponse('here')

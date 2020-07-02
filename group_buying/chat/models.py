@@ -1,8 +1,25 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
+class Car(models.Model):
+    id = models.AutoField(primary_key=True,auto_created=True)
+    name = models.CharField(max_length=25,null=True)
+    brand = models.CharField(max_length=25,null=True)
+    version = models.IntegerField(null=True)
+    price = models.IntegerField(null=True)
+    image = models.CharField(max_length=100)
+    mileage = models.IntegerField(null=True)
+    fuel_type = models.CharField(max_length=20,null=True)
+    seating_capacity = models.IntegerField(null=True)
+    body_style = models.CharField(max_length=20,null=True)
+    fuel_tank_capacity = models.IntegerField(null=True)
+
 class ChatRoom(models.Model):
     eid = models.CharField(max_length=64, unique=True)
     name = models.CharField(max_length=25)
+    car  = models.ForeignKey(Car,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
+
 class ChatMessage(models.Model):
     id = models.AutoField(primary_key=True,auto_created=True)
     room = models.ForeignKey(ChatRoom,on_delete=models.CASCADE)
@@ -19,3 +36,4 @@ class ChatMessage(models.Model):
         out['date'] = self.date.strftime('%H:%M:%S')
         out['text'] = self.text
         return out
+

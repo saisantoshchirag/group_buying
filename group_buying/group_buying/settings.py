@@ -40,13 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'Accounts',
     'home',
-    'social_django',
-    # 'allauth',   # <--
-    # 'allauth.account',   # <--
-    # 'allauth.socialaccount',   # <--
-    # 'allauth.socialaccount.providers.google',   # <--
     'profiles',
     'chat'
+
 ]
 
 MIDDLEWARE = [
@@ -144,7 +140,7 @@ EMAIL_PORT = 587
 
 AUTHENTICATION_BACKENDS = (
  'django.contrib.auth.backends.ModelBackend',
- # 'allauth.account.auth_backends.AuthenticationBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
 
 )
 
@@ -163,30 +159,6 @@ SOCIALACCOUNT_PROVIDERS = {
 },
 }
 
-SOCIALACCOUNT_PROVIDERS = {'facebook':
-       {'METHOD': 'oauth2',
-        'SCOPE': ['email','public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time'],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': lambda request: 'kr_KR',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.4'}}
-# 954938060767-nb172o8gr5ooa8ifuk0felgobl1gm3cf.apps.googleusercontent.com
-# FOzLZCIN08QvClgC-lGScH_E
-SOCIAL_FACEBOOK_AUTH_KEY = '3436195899723875'
-SOCIAL_FACEBOOK_AUTH_SECRET = 'e2cff03b774b9ad7f7e0465f4138bff0'
 
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_USERNAME_REQURIED=True

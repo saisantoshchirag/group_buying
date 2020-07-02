@@ -6,8 +6,13 @@
 
 
 {% block content %}
-        {% for room in rooms %}
-            <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
-{#            {{ room.id }}#}
-        {% endfor %}
+    {% for room in rooms %}
+        {#            {{ room #}
+        {#            {{ room.image }}#}
+        {#            <img src="{{ room.image }}">#}
+        <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
+        <a href="{% url 'join' room.eid %}"> join</a>
+        <br>
+
+    {% endfor %}
 {% endblock content %}
