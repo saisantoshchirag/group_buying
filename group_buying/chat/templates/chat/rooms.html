@@ -6,13 +6,23 @@
 
 
 {% block content %}
-    {% for room in rooms %}
-        {#            {{ room #}
-        {#            {{ room.image }}#}
-        {#            <img src="{{ room.image }}">#}
-        <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
-        <a href="{% url 'join' room.eid %}"> join</a>
-        <br>
+    {% if room_user %}
+     {% for room in rooms %}
+            <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
+            {% if room_user == room.id %}
+                <a href="{% url 'home' room.eid %}">  <h1>Go to room</h1> </a>
+                <br>
+            {% else %}
+         <h4> You can't join</h4>
+            <br>
+         {% endif %}
 
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+         {% for room in rooms %}
+            <a href="{% url 'home' room.eid %}">{{ room.name }}</a>
+            <a href="{% url 'join' room.eid %}"> join</a>
+            <br>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}

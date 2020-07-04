@@ -17,8 +17,11 @@ class Car(models.Model):
 class ChatRoom(models.Model):
     eid = models.CharField(max_length=64, unique=True)
     name = models.CharField(max_length=25)
-    car  = models.ForeignKey(Car,on_delete=models.CASCADE)
-    user = models.ForeignKey(User,blank=True,null=True,on_delete=models.CASCADE)
+    # car  = models.ForeignKey(Car,on_delete=models.CASCADE)
+
+class ChatUser(models.Model):
+    chat = models.ForeignKey(ChatRoom,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
 
 class ChatMessage(models.Model):
     id = models.AutoField(primary_key=True,auto_created=True)
