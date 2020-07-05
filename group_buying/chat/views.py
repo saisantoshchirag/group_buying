@@ -71,6 +71,14 @@ def delete(request,room,id):
 
 @login_required(login_url='/loginmodule/login/')
 def rooms(request):
+
+    userprofile = UserProfile.objects.filter(user=request.user).values()
+    print(userprofile)
+    print(len(userprofile))
+    # except:
+        # return redirect('create')
+    if len(userprofile) == 0:
+        return redirect('create')
     room = UserProfile.objects.filter(user=request.user).values()[0]['room_id']
     if room is None:
         room = ''

@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'Accounts',
     'home',
     'profiles',
-    'chat'
-
+    'chat',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -138,59 +138,16 @@ EMAIL_HOST_USER = 'santosh.265559@gmail.com'
 EMAIL_HOST_PASSWORD = 'santoshgoud'
 EMAIL_PORT = 587
 
-AUTHENTICATION_BACKENDS = (
- 'django.contrib.auth.backends.ModelBackend',
- 'allauth.account.auth_backends.AuthenticationBackend',
 
+LOGIN_REDIRECT_URL = 'home'
+# LOGIN_URL = '/loginmodule/auth/login/google-oauth2/'
+# #
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+#
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='954938060767-e3ul4f15ei80kn2op09841sm1hvh4lkp.apps.googleusercontent.com'  #Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-4utTmxk_y0QXGN_XQKyeyfa'
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
-SITE_ID = 2
-LOGIN_REDIRECT_URL = 'home'
-
-SOCIALACCOUNT_PROVIDERS = {
-'google': {
-    'SCOPE': [
-        'profile',
-        'email',
-    ],
-    'AUTH_PARAMS': {
-        'access_type': 'online',
-    }
-},
-}
-
-
-ACCOUNT_EMAIL_REQUIRED=True
-ACCOUNT_USERNAME_REQURIED=True
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'MYAPP': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
-}

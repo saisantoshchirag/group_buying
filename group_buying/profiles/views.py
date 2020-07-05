@@ -84,5 +84,5 @@ def create(request):
         gender = request.POST.get('gender')
         image = request.FILES['image']
         UserProfile.objects.create(image = image,state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
-        return redirect('view')
+        return redirect(request.GET.get('next','view'))
     return render(request,'profiles/create.html')
