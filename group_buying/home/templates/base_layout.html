@@ -1,117 +1,104 @@
-{% load static  %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<title></title>
-<link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">
-
-
+    <meta charset="utf-8">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> {% block headblock %} {% endblock headblock %}
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+    <title>NayaGaadi-Home</title>
     <style>
-        .img123 {
-            float: right;
-            height: 40px;
-            width: 40px;
-            margin-top: 5px;
-        }
-
-        .topnav {
-            overflow: hidden;
-            width: 100%;
-            top: 10px;
-            color: white;
-            background-color: black;
-
-        }
-
-        .button2 {
-
-            float: right;
-            background: none;
+        .nothing {
+            color: gray;
+            background-color: #343a40;
             border: none;
-            color: white;
-            margin-right: 0px;
-            padding: 8px 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            margin: 3px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.5s;
+            font-size: 16px;
         }
-
-        .button1 {
-            background: none;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.5s;
+        
+        .nothing:hover {
+            color: lightgray;
         }
-
-        .button1:hover {
-            background-color: #5B7BD5;
+        
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
-
-        .button2:hover {
-            background-color: #5B7BD5;
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
         }
-
-
-            {% block style %}
-
-            {% endblock style %}
     </style>
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-        integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
-
-    <div class="topnav">
-        <a href="{% url 'home' %}"> <button class="button1">NayaGaadi </button></a>
-        <a href="{% url 'rooms' %}"> <button class="button1">ChatRoom </button></a>
-        {% if not request.user.username %}
-        <a href="{% url 'login' %}"><button class="button2">Login</button></a>
-        <a href="{% url 'loginmodule_register' %}"><button class="button2" name="Login" value="Login">
-                Signup</button></a>
-
-
-    {% else %}
-
-    <form class="button2" action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="logout-button-nav"
-            style="background-color: transparent;color: #FFFFFF; border: none;">Log out </button>
-    </form>
-    <a href="{% url 'view' %}"><button class="button2"> {{request.user.username}}</button></a>
-
-    {% endif %}
-</div>
-
-    {% block headblock %}
-{#        {% if messages %}#}
-{#            {% for message in messages %}#}
-{#                {{ message.tags }} {{ message }}#}
-{#            {% endfor %}#}
-{#        {% endif %}#}
-    {% endblock headblock %}
-
 </head>
 
 <body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="{% url 'home' %}"> NayaGaadi </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vehicles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if request.user.username %}
+                    <li class="nav-item">
+                        <a href="{% url 'rooms' %}"> ChatRoom </a>
+                    </li>
+                    {% endif %} {% if not request.user.username %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'loginmodule_register' %}">
+                            <button class="nothing" name="Login" value="Login">Signup</button>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <form class="form-inline" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="nothing">Log out </button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'view' %}">{{request.user.username}}</a>
+                    </li>
+                    {% endif %}
 
-    {% block content %}
-    {% endblock content %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    {% block content %} {% endblock content %}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 
 </html>
