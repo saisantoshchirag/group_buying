@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import UserProfile
+from .models import UserProfile,ChangePassword
 from .forms import UpdateForm
 import re
 from django.http import HttpResponse
@@ -75,11 +75,27 @@ def change_phone(request):
         if not isValid(phone):
             return HttpResponse('<html><script>alert("You have entered invalid phone number .Please check");window.location="/profile/phone";</script></html>')
         code = get_random_string(length=6,allowed_chars='0123456789')
-        print(code)
+        otps = ChangePassword.objects.filter(user=request.user)
+        if otps:
+            ChangePassword.objects.filter(user=request.user).delete()
+        ChangePassword.objects.create(user=request.user,code=code,phone_number=phone)
+        account_sid = 'ACc3334be22f266fb10c6ce4e77a660264'
+        auth_token = '9077db471beb2d47a3ea60e0382b8aef'
+        client = Client(account_sid, auth_token)
+        body = 'Please verify your phone number.OTP: '+str(code) + '. Do not share with anyone!!!'
+        message = client.messages.create(
+            body=body,
+            from_='+12058436831',
+            to='+91' + str(phone)
+        )
     return render(request,'profiles/otp.html')
 
 def validate_otp(request):
-    pass
+    obj = ChangePassword.objects.filter(user=request.user).values()
+    if request.POST['otp'] == str(obj[0]['code']):
+        UserProfile.objects.filter(user=request.user).update(phone_number=obj[0]['phone_number'])
+    ChangePassword.objects.filter(user=request.user).delete()
+    return redirect('view')
 
 def isValid(s):
     Pattern = re.compile("(0/91)?[6-9][0-9]{9}")

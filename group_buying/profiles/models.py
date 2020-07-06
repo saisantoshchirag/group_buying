@@ -12,3 +12,9 @@ class UserProfile(models.Model):
     state = models.CharField(max_length=50)
     pincode = models.IntegerField(default=0)
     room = models.ForeignKey(ChatRoom,on_delete=models.SET_NULL,blank=True,null=True)
+
+class ChangePassword(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    phone_number = models.IntegerField()
+    code = models.IntegerField()
+    date = models.DateTimeField(auto_now=True)
