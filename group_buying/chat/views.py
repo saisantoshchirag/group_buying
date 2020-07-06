@@ -1,7 +1,7 @@
 from django.http import  HttpResponseNotAllowed
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .models import ChatRoom, ChatMessage,Car
+from .models import ChatRoom, ChatMessage
 from django.http import HttpResponseRedirect,HttpResponse
 from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
@@ -71,19 +71,13 @@ def delete(request,room,id):
 
 @login_required(login_url='/loginmodule/login/')
 def rooms(request):
-
     userprofile = UserProfile.objects.filter(user=request.user).values()
-    print(userprofile)
-    print(len(userprofile))
-    # except:
-        # return redirect('create')
     if len(userprofile) == 0:
         return redirect('create')
     room = UserProfile.objects.filter(user=request.user).values()[0]['room_id']
     if room is None:
         room = ''
     rooms = ChatRoom.objects.all().values()
-    # cars = Car.objects.all().values()
     user = User.objects.filter(username=request.user)
     is_staff = user.values()[0]['is_staff']
     return render(request,'chat/rooms.html',{'rooms':rooms,'is_staff':is_staff,'room_user':room})
@@ -96,6 +90,4 @@ def join(request,room_id):
         return redirect('create')
     rooms = ChatRoom.objects.filter(eid=room_id)
     UserProfile.objects.filter(user=request.user).update(room=room_id)
-
-    print(rooms)
     return HttpResponse('here')

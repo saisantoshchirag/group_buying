@@ -41,11 +41,11 @@
             <br><br>
             <label for="id_pincode">Pincode</label>
             <input type="number" name="pincode"  id="id_pincode"><br><br>
-            <label for="id_phone_number">Phone number</label>
-            <input type="number" id="id_phone_number" onkeyup="s()" name="phone_number" class="form1">
-            <input type="button" id="verify_phone" disabled value="verify" >
-
-            <br><br>
+{#            <label for="id_phone_number">Phone number</label>#}
+{#            <input type="number" id="id_phone_number" onkeyup="s()" name="phone_number" class="form1">#}
+{#            <input type="button" id="verify_phone" disabled value="verify"  onclick="myFunction()">#}
+{#            <input type="hidden" id="otp" name="otp">#}
+            <br>
             <input type="hidden" name="country" id="countryId" value="IN"/>
             <label for="cityId">State</label>
             <select name="state" class="states order-alpha ui search dropdown" id="stateId">
@@ -68,6 +68,13 @@
         </form>
         <br>
         <script type="text/javascript">
+
+            function myFunction() {
+                var x = document.getElementById("otp");
+                if (x.type === "hidden") {
+                    x.type = "text";
+                }
+            }
             function s(){
                 var i=document.getElementById("id_phone_number");
                 if(i.value=="")

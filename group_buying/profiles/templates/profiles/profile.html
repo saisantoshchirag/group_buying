@@ -38,7 +38,7 @@
     <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
     <h3>{{ user.userprofile.city }}</h3>
     <h3>{{ user.userprofile.state }}</h3>
-    <h3>{{ user.userprofile.phone_number }}</h3>
+    <h3>{{ user.userprofile.phone_number }}</h3><a href="{% url 'phone_number' %}"><button class="btn1">Change Phone Number</button></a>
     <h3>{{ user.userprofile.pincode }}</h3>
     <h3>{{ user.userprofile.gender }}</h3>
     <a href="{% url 'update' %}"><button class="btn1"> Edit Profile</button> </a>

@@ -11,6 +11,5 @@ urlpatterns = [
     path('',views.rooms,name='rooms'),
     path('/events/', include(django_eventstream.urls)),
     path('delete/<room>/<id>',views.delete,name='delete'),
-    # path('data',views.data),
     path('join/<room_id>',views.join,name='join')
 ]

@@ -1,0 +1,60 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block headblock %}
+    <title>Change phone number</title>
+    <style>
+        .form1{
+            {#margin-top: 100px;#}
+            margin-left: 100px;
+        }
+        .btn1 {
+            white-space: normal;
+            background-color: #007d91;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+            border-radius: 30px;
+            width: 300px;
+        }
+        .btn1:hover{
+            color:whitesmoke;background-color:black;text-align: center
+
+        }
+
+    </style>
+{% endblock headblock %}
+
+{% block content %}
+    <center>
+    <form action="{% url 'change_phone' %}" method="post">
+        {% csrf_token %}
+        <label for="id_phone_number">Enter Phone Number:</label><br>
+        <input type="text" id="id_phone_number" onkeyup="s()" name="phone_number" class="form1" autocomplete="off"><br><br>
+        <input type="submit" id="verify_phone" disabled value="verify">
+        <input type="hidden" id="otp" name="otp">
+    </form>
+    </center>
+    <script>
+    function myFunction() {
+                var x = document.getElementById("otp");
+                if (x.type === "hidden") {
+                    x.type = "text";
+                }
+            }
+        function s(){
+            var i=document.getElementById("id_phone_number");
+            if(i.value=="")
+            {
+                document.getElementById("verify_phone").disabled=true;
+            }
+            else
+                document.getElementById("verify_phone").disabled=false;}
+    </script>
+
+{% endblock content %}
