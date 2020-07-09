@@ -135,15 +135,15 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'santosh.265559@gmail.com'
-EMAIL_HOST_PASSWORD = 'santoshgoud'
+EMAIL_HOST_PASSWORD = 'Santoshchirag@265559'
 EMAIL_PORT = 587
 
 
 LOGIN_REDIRECT_URL = 'home'
 # LOGIN_URL = '/loginmodule/auth/login/google-oauth2/'
 # #
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-#
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'#
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='954938060767-e3ul4f15ei80kn2op09841sm1hvh4lkp.apps.googleusercontent.com'  #Paste CLient Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-4utTmxk_y0QXGN_XQKyeyfa'
 AUTHENTICATION_BACKENDS = (

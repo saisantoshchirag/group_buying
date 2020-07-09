@@ -32,7 +32,7 @@ def signup(request):
                     'token':account_activation_token.make_token(user),}
             message = render_to_string('Accounts/acc_active_email.html', data)
             to_email = form.cleaned_data.get('email')
-            to_email = 'saisantosh.c17@iiits.in'
+            # to_email = 'saisantosh.c17@iiits.in'
             send_mail(mail_subject, message, 'santosh.265559@gmail.com', [to_email])
 
             return render(request,'Accounts/send.html')
@@ -47,7 +47,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('create')
     else:
         return HttpResponse('Activation link is invalid!')

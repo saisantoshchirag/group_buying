@@ -6,7 +6,7 @@ from chat.models import ChatRoom
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone_number = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='profile_image',blank=True)
+    image = models.ImageField(upload_to='profile_image',blank=True,default='prof1.jpeg')
     gender = models.CharField(max_length=10)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)

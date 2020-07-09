@@ -5,7 +5,7 @@ import re
 from django.http import HttpResponse
 from twilio.rest import Client
 from django.utils.crypto import get_random_string
-
+from django.core.files.storage import FileSystemStorage
 def update(request):
     current_user = UserProfile.objects.filter(user=request.user).values()
     cur_gender = current_user[0].get('gender')
@@ -16,6 +16,10 @@ def update(request):
         form = UpdateForm(request.POST, request.FILES)
         if form.is_valid():
             try:
+                myfile = request.FILES['image']
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
+                uploaded_file_url = fs.url(filename)
                 UserProfile.objects.filter(user=request.user).update(image=request.FILES['image'])
             except:
                 pass
@@ -53,8 +57,8 @@ def create(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         gender = request.POST.get('gender')
-        image = request.FILES['image']
-        UserProfile.objects.create(image = image,state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
+        # image = request.FILES['image']
+        UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
         return redirect(request.GET.get('next','view'))
     return render(request,'profiles/create.html')
 
