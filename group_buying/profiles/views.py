@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import UserProfile,ChangePassword
 from .forms import UpdateForm
 import re
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from twilio.rest import Client
 from django.utils.crypto import get_random_string
@@ -48,11 +49,17 @@ def update(request):
     return render(request,'profiles/update.html',{'form':form})
 
 @login_required(login_url='/loginmodule/login/')
-def profile(request):
-    user = UserProfile.objects.filter(user=request.user).values()
-    if not user:
+def profile(request,name):
+    user = User.objects.filter(username=name).values()
+    userprofile = user[0]['id']
+    user = UserProfile.objects.filter(user_id=userprofile).values()
+    is_user = name==str(request.user)
+    if not user and is_user:
         return redirect('create')
-    return render(request,'profiles/profile.html',{'user':request.user})
+    if not user and not is_user:
+        return HttpResponse('<html><script>alert("Profile Doesnot exist");window.location="/";</script></html>')
+
+    return render(request,'profiles/profile.html',{'user':request.user,'is_user':is_user})
 
 @login_required(login_url='/loginmodule/login/')
 def create(request):
@@ -62,9 +69,12 @@ def create(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         gender = request.POST.get('gender')
-        # image = request.FILES['image']
         UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
-        return redirect(request.GET.get('next','view'))
+        try:
+            return redirect(request.GET.get('next'))
+        except:
+
+            return redirect('view',name=request.user)
     return render(request,'profiles/create.html')
 
 def phone_number(request):

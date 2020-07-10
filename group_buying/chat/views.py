@@ -7,21 +7,21 @@ from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
 
 
-def home(request, room_id=None):
-    user = request.user
+def home(request, room_id):
     user = UserProfile.objects.filter(user=request.user).values()
-    print(type(room_id))
-    print(room_id)
-    print(type(user[0]['room_id']))
-
     if not room_id == str(user[0]['room_id']):
         return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
     if user:
-        if not room_id:
-            return redirect('/default?' + request.GET.urlencode())
         try:
             result = {}
             room = ChatRoom.objects.get(eid=room_id)
+            chat_users = ChatUser.objects.filter(chat=room).values()
+            print(chat_users)
+            usernames = []
+            for i in range(len(chat_users)):
+                userss = User.objects.filter(id=chat_users[i]['user_id']).values()
+                print(userss)
+
             cmsgs = ChatMessage.objects.filter(
                 room=room).order_by('date')[:50].values()
             msgs = []
@@ -69,7 +69,6 @@ def messages(request, room_id):
             return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
 
         mfrom = request.POST['from']
-        print(mfrom)
         if not any(fields):
             return HttpResponseRedirect(path)
         ChatMessage.objects.create(room=room,user=mfrom,text=text,document=file,image=img)
@@ -102,8 +101,6 @@ def join(request,room_id):
     except:
         return redirect('create')
     rooms = ChatRoom.objects.filter(eid=room_id)
-    print(type(rooms))
-    print(rooms[0])
     UserProfile.objects.filter(user=request.user).update(room=room_id)
     ChatUser.objects.create(chat=rooms[0],user=request.user)
     return redirect('home',room_id=room_id)
