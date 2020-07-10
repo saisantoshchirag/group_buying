@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from twilio.rest import Client
 from django.utils.crypto import get_random_string
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/loginmodule/login/')
 def update(request):
     current_user = UserProfile.objects.filter(user=request.user).values()
     cur_gender = current_user[0].get('gender')
@@ -44,12 +47,14 @@ def update(request):
         form = UpdateForm()
     return render(request,'profiles/update.html',{'form':form})
 
+@login_required(login_url='/loginmodule/login/')
 def profile(request):
     user = UserProfile.objects.filter(user=request.user).values()
     if not user:
         return redirect('create')
     return render(request,'profiles/profile.html',{'user':request.user})
 
+@login_required(login_url='/loginmodule/login/')
 def create(request):
     if request.method == 'POST':
         pincode = request.POST.get('pincode')

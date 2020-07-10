@@ -8,14 +8,14 @@
     <meta name="description" content="Chat">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'nomalize.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'nomalize.min.css' %}">#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">#}
 
     <script src="{% static 'django_eventstream/json2.js' %}"></script>
     <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
     <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
     <script src="{% static 'jquery-3.2.1.min.js' %}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
 
 </head>
 <body>
@@ -46,13 +46,15 @@
             <center>{{ msg }}</center>
             <br>
             {% for i in isg  %}
+
                 <b>{{ i.user }}</b> :
                 {{ i.time }}
                 {{ i.text }}
                 {% if i.is_delete %}
+
                     <a href="{% url 'delete' context.room_id i.id %}"><i class="fa fa-trash"></i> </a>
                 {% endif %}
-                {% if i.document %}
+                {% if i.document %}e
                      <a href="/media/{{ i.document}}" target="_blank" class="btn btn-primary" > {{ i.document }}</a>
 
                 {% endif %}

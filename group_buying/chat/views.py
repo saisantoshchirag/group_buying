@@ -1,7 +1,7 @@
 from django.http import  HttpResponseNotAllowed
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .models import ChatRoom, ChatMessage
+from .models import ChatRoom, ChatMessage,ChatUser
 from django.http import HttpResponseRedirect,HttpResponse
 from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 def home(request, room_id=None):
     user = request.user
+    user = UserProfile.objects.filter(user=request.user).values()
+    print(type(room_id))
+    print(room_id)
+    print(type(user[0]['room_id']))
+
+    if not room_id == str(user[0]['room_id']):
+        return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
     if user:
         if not room_id:
             return redirect('/default?' + request.GET.urlencode())
@@ -56,7 +63,13 @@ def messages(request, room_id):
             room = ChatRoom.objects.get(eid=room_id)
         except ChatRoom.DoesNotExist:
             return HttpResponse('room doesnot exist')
+        user = UserProfile.objects.filter(user=request.user).values()
+
+        if not room_id==user[0]['room_id']:
+            return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
+
         mfrom = request.POST['from']
+        print(mfrom)
         if not any(fields):
             return HttpResponseRedirect(path)
         ChatMessage.objects.create(room=room,user=mfrom,text=text,document=file,image=img)
@@ -89,5 +102,8 @@ def join(request,room_id):
     except:
         return redirect('create')
     rooms = ChatRoom.objects.filter(eid=room_id)
+    print(type(rooms))
+    print(rooms[0])
     UserProfile.objects.filter(user=request.user).update(room=room_id)
-    return HttpResponse('here')
+    ChatUser.objects.create(chat=rooms[0],user=request.user)
+    return redirect('home',room_id=room_id)
