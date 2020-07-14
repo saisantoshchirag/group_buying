@@ -21,7 +21,8 @@ def home(request, room_id):
             for i in range(len(chat_users)):
                 userss = User.objects.filter(id=chat_users[i]['user_id']).values()
                 print(userss)
-
+                usernames.append(userss[0]['username'])
+                print(chat_users[i])
             cmsgs = ChatMessage.objects.filter(
                 room=room).order_by('date')[:50].values()
             msgs = []
@@ -38,7 +39,7 @@ def home(request, room_id):
         context1['room_id'] = room_id
         context1['messages'] = result
         context1['user'] = user
-        return render(request, 'chat/chat.html', {'context':context1})
+        return render(request, 'chat/chat.html', {'context':context1,'username':usernames})
     else:
         context = {}
         context['room_id'] = room_id or 'default'
@@ -64,8 +65,12 @@ def messages(request, room_id):
         except ChatRoom.DoesNotExist:
             return HttpResponse('room doesnot exist')
         user = UserProfile.objects.filter(user=request.user).values()
-
-        if not room_id==user[0]['room_id']:
+        print(user)
+        print(room_id)
+        print(type(user[0]['room_id']))
+        print(type(room_id))
+        print(user==room_id)
+        if not room_id==str(user[0]['room_id']):
             return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
 
         mfrom = request.POST['from']
