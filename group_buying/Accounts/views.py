@@ -54,7 +54,7 @@ def activate(request, uidb64, token):
 
 def signin(request):
     if request.user.is_authenticated:
-        messages.add_message(request, messages.INFO, 'You are already Logged in.')
+        messages.success(request, 'You are Logged in.')
         return redirect('home')
     else:
         c = {}
@@ -67,7 +67,8 @@ def auth_view(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        messages.add_message(request, messages.INFO, 'Your are now Logged in.')
+        messages.success(request, 'You are Logged in.')
+
         try:
             UserProfile.objects.filter(user=request.user)
         except:
@@ -80,8 +81,9 @@ def auth_view(request):
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)
-    messages.add_message(request, messages.INFO, 'You are Successfully Logged Out')
-    messages.add_message(request, messages.INFO, 'Thanks for visiting.')
+    messages.success(request, 'You are Successfully Logged Out')
+    messages.success(request, 'Thanks for visiting')
+    # messages.add_message(request, messages.INFO, 'Thanks for visiting.')
     return redirect('login')
 
 def reset_display(request):

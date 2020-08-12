@@ -3,14 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="0fe96efd-5410-4cee-b81e-b70dc239991a" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/group_buying/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/Accounts/templates/Accounts/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/Accounts/templates/Accounts/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/Accounts/tokens.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/Accounts/tokens.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/Accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/Accounts/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/Accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/Accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/group_buying/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/group_buying/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/mysite.log" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/mysite.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/group_buying/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/group_buying/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/home/templates/base_layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/home/templates/base_layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/home/templates/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/home/templates/home/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/profiles/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/profiles/templates/profiles/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/templates/profiles/create.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,6 +22,14 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -30,12 +42,14 @@
     </option>
   </component>
   <component name="ProjectId" id="1dtrn3LE12B35SaKan5zLHXvS4A" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/group_buying/group_buying" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -49,6 +63,54 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration type="Python.DjangoServer" factoryName="Django server">
+      <module name="group_buying" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Santosh Chirag\AppData\Local\Programs\Python\Python35\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <module name="group_buying" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Santosh Chirag\AppData\Local\Programs\Python\Python35\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -60,6 +122,11 @@
       <option name="presentableId" value="Default" />
       <updated>1593255405574</updated>
       <workItem from="1593255722598" duration="9377000" />
+      <workItem from="1596016585852" duration="4263000" />
+      <workItem from="1596088589487" duration="3011000" />
+      <workItem from="1596606669773" duration="1443000" />
+      <workItem from="1596617698517" duration="716000" />
+      <workItem from="1597024956894" duration="31310000" />
     </task>
     <servers />
   </component>
@@ -71,7 +138,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

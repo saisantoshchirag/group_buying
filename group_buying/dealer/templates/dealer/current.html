@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %}
+{% block headblock %}
+
+{% endblock headblock %}
+
+{% block content %}
+    <br><br>
+    {% if status %}
+    You are a dealer
+    {% else %}
+
+    KYC registration pending
+    {% endif %}
+    <br><br>
+    Edit KYC details:<a href="{% url 'dealer:update' %}"> <button>Edit Details </button></a>
+{% endblock content %}

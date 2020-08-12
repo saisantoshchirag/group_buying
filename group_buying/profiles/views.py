@@ -69,7 +69,11 @@ def create(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         gender = request.POST.get('gender')
-        UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
+        user_type= request.POST.get('user_type')
+        if user_type=='dealer':
+            UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user,is_dealer=False)
+        if user_type=='user':
+            UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
         try:
             return redirect(request.GET.get('next'))
         except:
@@ -99,7 +103,7 @@ def change_phone(request):
             ChangePassword.objects.filter(user=request.user).delete()
         ChangePassword.objects.create(user=request.user,code=code,phone_number=phone)
         account_sid = 'ACc3334be22f266fb10c6ce4e77a660264'
-        auth_token = '9077db471beb2d47a3ea60e0382b8aef'
+        auth_token = '10bd2993779bd0521f9383353b7068f2'
         client = Client(account_sid, auth_token)
         body = 'Please verify your phone number.OTP: '+str(code) + '. Do not share with anyone!!!'
         message = client.messages.create(

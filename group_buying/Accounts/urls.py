@@ -1,5 +1,5 @@
 from django.urls import path,include
-from Accounts.views import auth_view, signup, signin, logout,activate,reset_password,reset_display,verify_reset_password,save_password
+from .views import auth_view, signup, signin, logout,activate,reset_password,reset_display,verify_reset_password,save_password
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 from django.views.generic import TemplateView

@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'home',
     'profiles',
     'chat',
-    'social_django'
+    'social_django',
+    'dealer',
+    'staff'
+
 ]
 
 MIDDLEWARE = [
@@ -135,7 +138,7 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'santosh.265559@gmail.com'
-EMAIL_HOST_PASSWORD = 'Santoshchirag@265559'
+EMAIL_HOST_PASSWORD = 'LaCaseDePapel'
 EMAIL_PORT = 587
 
 

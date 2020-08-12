@@ -4,6 +4,8 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <meta name="generator" content="Jekyll v4.0.1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> {% block headblock %} {% endblock headblock %}
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
@@ -44,6 +46,37 @@
 </head>
 
 <body>
+
+{% if messages %}
+
+ 	<style type="text/css">
+ 		div.messages{
+ 			background-color: #ff6b6b;
+ 			color: #f7fff7;
+            /*display: none;*/
+ 		}
+ 		ul.messages{
+ 			list-style-type: none;
+ 		}
+ 	</style>
+
+    <div class='messages' id="id1">
+
+    <ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} {% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}<button style="background-color: #ff6b6b;border: none"  onclick="document.getElementById('id1').style.display = 'none'">
+<i class="fa fa-close"></i>
+</button>
+</li>
+    {% endfor %}
+    </ul>
+
+    </div>
+
+{% endif %}
+<script>
+
+</script>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="{% url 'home' %}"> NayaGaadi </a>
@@ -69,12 +102,23 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'rooms' %}" class="nav-link"> ChatRoom </a>
-
                     </li>
+                    {% if user.userprofile.is_dealer%}
+                    <li class="nav-item">
+                        <a href="{% url 'dealer:status' %}" class="nav-link"> Apply dealer status</a>
+                    </li>
+
+                    {% endif %}
+                    {% if request.user.is_staff %}
+                        <li class="nav-item">
+                            <a href="{% url 'staff:confirm' %}" class="nav-link"> Verify KYC </a>
+                        </li>
+                    {% endif %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if request.user.username %}
                     {% endif %} {% if not request.user.username %}
+
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
@@ -85,6 +129,9 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
+<!--                        {% if request.user.is_staff %}-->
+<!--                        Admin-->
+<!--                    {% endif %}-->
                         <form class="form-inline" action="{% url 'logout' %}" method="post" class="nav-link">
                             {% csrf_token %}
                             <button type="submit" class="nothing">Log out </button>
@@ -103,5 +150,25 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
+<script>
+    var message_ele = document.getElementById("message_container");
+
+setTimeout(function(){
+   message_ele.style.display = "none";
+}, 3000);
+</script>
+<script>
+    $(document).ready(function() {
+        console.log('in ready function')
+        setTimeout(function() {
+            $('.message').fadeOut('slow');
+        }, 3000); // <-- time in milliseconds, 1000 =  1 sec
+
+        // delete message
+        $('.del-msg').live('click',function(){
+            $('.del-msg').parent().attr('style', 'display:none;');
+        })
+    });
+</script>
 
 </html>

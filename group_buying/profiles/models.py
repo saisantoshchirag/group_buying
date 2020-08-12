@@ -12,9 +12,13 @@ class UserProfile(models.Model):
     state = models.CharField(max_length=50)
     pincode = models.IntegerField(default=0)
     room = models.ForeignKey(ChatRoom,on_delete=models.SET_NULL,blank=True,null=True)
+    is_dealer = models.BooleanField('dealer status',default=False)
+    is_user = models.BooleanField('user status',default=True)
+    is_admin = models.BooleanField('admin status',default=False)
 
 class ChangePassword(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone_number = models.IntegerField()
     code = models.IntegerField()
     date = models.DateTimeField(auto_now=True)
+
