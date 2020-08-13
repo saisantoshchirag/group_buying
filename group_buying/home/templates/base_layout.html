@@ -47,33 +47,6 @@
 
 <body>
 
-{% if messages %}
-
- 	<style type="text/css">
- 		div.messages{
- 			background-color: #ff6b6b;
- 			color: #f7fff7;
-            /*display: none;*/
- 		}
- 		ul.messages{
- 			list-style-type: none;
- 		}
- 	</style>
-
-    <div class='messages' id="id1">
-
-    <ul class="messages">
-    {% for message in messages %}
-    <li>{% if message.tags %} {% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}<button style="background-color: #ff6b6b;border: none"  onclick="document.getElementById('id1').style.display = 'none'">
-<i class="fa fa-close"></i>
-</button>
-</li>
-    {% endfor %}
-    </ul>
-
-    </div>
-
-{% endif %}
 <script>
 
 </script>
@@ -101,13 +74,17 @@
                         <a class="nav-link" href="#">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'rooms' %}" class="nav-link"> ChatRoom </a>
+                        <a href="{% url 'chat:rooms' %}" class="nav-link"> ChatRoom </a>
                     </li>
-                    {% if user.userprofile.is_dealer%}
+                    {% if request.user.dealer.kyc_verified %}
+                    <li class="nav-item">
+                        <a href="{% url 'dealer:update' %}" class="nav-link"> Update KYC </a>
+                    </li>
+
+                    {% else %}
                     <li class="nav-item">
                         <a href="{% url 'dealer:status' %}" class="nav-link"> Apply dealer status</a>
                     </li>
-
                     {% endif %}
                     {% if request.user.is_staff %}
                         <li class="nav-item">
@@ -146,6 +123,34 @@
             </div>
         </nav>
     </header>
+{% if messages %}
+
+ 	<style type="text/css">
+ 		div.messages{
+ 			background-color: #ff6b6b;
+ 			color: #f7fff7;
+            /*display: none;*/
+ 		}
+ 		ul.messages{
+ 			list-style-type: none;
+ 		}
+ 	</style>
+
+    <div class='messages' id="id1">
+
+    <ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} {% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}<button style="background-color: #ff6b6b;border: none"  onclick="document.getElementById('id1').style.display = 'none'">
+<i class="fa fa-close"></i>
+</button>
+</li>
+    {% endfor %}
+    </ul>
+
+    </div>
+
+{% endif %}
+
     {% block content %} {% endblock content %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>

@@ -5,7 +5,7 @@ from .models import ChatRoom, ChatMessage,ChatUser
 from django.http import HttpResponseRedirect,HttpResponse
 from profiles.models import UserProfile
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 
 def home(request, room_id):
     user = UserProfile.objects.filter(user=request.user).values()
@@ -109,3 +109,14 @@ def join(request,room_id):
     UserProfile.objects.filter(user=request.user).update(room=room_id)
     ChatUser.objects.create(chat=rooms[0],user=request.user)
     return redirect('home',room_id=room_id)
+
+def create_room(request):
+    id = 0
+    for i in ChatRoom.objects.all().values():
+        id = max(id, i['id'])
+    if request.method == 'POST':
+        # id_post = request.POST['id']
+        name = request.POST['car']
+        ChatRoom.objects.create(eid=id+1,name=name)
+        return redirect('chat:rooms')
+    return render(request,'chat/create.html',{'id':id+1})

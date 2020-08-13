@@ -1,0 +1,16 @@
+{% extends 'base_layout.html' %}
+
+{% block headblock %}
+
+{% endblock headblock %}
+
+{% block content %}
+    {{ id }}
+    <br><br>
+    <form action="{% url 'chat:create' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="car">
+    <input type="submit">
+    </form>
+
+{% endblock content %}

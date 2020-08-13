@@ -5,7 +5,7 @@
 
 {% block content %}
     <br><br>
-    {% if status %}
+    {% if request.user.dealer.kyc_verified %}
     You are a dealer
     {% else %}
 

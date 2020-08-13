@@ -33,25 +33,12 @@
         <form  method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <input type="hidden" name="country" id="countryId" value="IN"/>
-<select name="state" class="states order-alpha" id="stateId">
-    <option value="">Select State</option>
-</select>
-<select name="city" class="cities order-alpha" id="cityId">
-    <option value="">Select City</option>
-</select>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="//geodata.solutions/includes/statecity.js"></script>
             <br>
             <label for="id_image"> Image </label>
             <input type="file" name="image" accept="image/*" id="id_image">
             <br><br>
             <label for="id_pincode">Pincode</label>
             <input type="number" name="pincode"  id="id_pincode"><br><br>
-            {#            <label for="id_phone_number">Phone number</label>#}
-            {#            <input type="number" id="id_phone_number" onkeyup="s()" name="phone_number" class="form1">#}
-            {#            <input type="button" id="verify_phone" disabled value="verify"  onclick="myFunction()">#}
-            {#            <input type="hidden" id="otp" name="otp">#}
             <br>
             <input type="hidden" name="country" id="countryId" value="IN"/>
             <label for="cityId">State</label>
@@ -92,7 +79,7 @@
                     document.getElementById("verify_phone").disabled=false;}
         </script>
 
-        <a href="{% url 'view' %}"><button class="btn1"> View Profile</button></a>
+        <a href="{% url 'view' request.user.username %}"><button class="btn1"> View Profile</button></a>
     </center>
 
 {% endblock content %}

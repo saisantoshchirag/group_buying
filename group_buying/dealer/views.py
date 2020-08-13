@@ -6,6 +6,10 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 # Create your views here.
 def status(request):
+    userprofile = UserProfile.objects.filter(user=request.user).values()
+    if len(userprofile) == 0:
+        return redirect('create')
+
     user = User.objects.filter(username=request.user).values()[0]['id']
     dealer = Dealer.objects.filter(user=user)
     if dealer:
@@ -43,70 +47,66 @@ def update(request):
         user = User.objects.filter(username=request.user).values()[0]['id']
         try:
             aadhar = request.FILES['aadhar']
-            Dealer.objects.filter(user=user).update(aadhar=aadhar)
+            Dealer.objects.filter(user=user).update(aadhar=aadhar,kyc_verified=False)
         except:
             pass
         try:
             pan = request.FILES['pan']
-            Dealer.objects.filter(user=user).update(pan=pan)
+            Dealer.objects.filter(user=user).update(pan=pan,kyc_verified=False)
         except:
             pass
         try:
             gts = request.FILES['gts']
-            Dealer.objects.filter(user=user).update(pan=gts)
+            Dealer.objects.filter(user=user).update(pan=gts,kyc_verified=False)
         except:
             pass
         try:
             reg = request.FILES['registration']
-
-            Dealer.objects.filter(user=user).update(registration=reg)
+            Dealer.objects.filter(user=user).update(registration=reg,kyc_verified=False)
         except:
             pass
         try:
             manager = request.POST['manager']
             if len(manager)>0:
 
-                Dealer.objects.filter(user=user).update(manager=manager)
+                Dealer.objects.filter(user=user).update(manager=manager,kyc_verified=False)
             print(manager)
         except:
             pass
         try:
             manager_mob = request.POST['manager_mobile']
-            Dealer.objects.filter(user=user).update(manager_mobile=manager_mob)
+            print(manager_mob)
+            Dealer.objects.filter(user=user).update(manage_mobile=manager_mob,kyc_verified=False)
         except:
             pass
         try:
             manager_email = request.POST['manager_email']
-            Dealer.objects.filter(user=user).update(manager_email=manager_email)
+            if len(manager_email)>0:
+                Dealer.objects.filter(user=user).update(manager_email=manager_email,kyc_verified=False)
         except:
             pass
         try:
             bank = request.POST['bankname']
             if len(bank)>0:
+                Dealer.objects.filter(user=user).update(bank_name=bank,kyc_verified=False)
 
-                Dealer.objects.filter(user=user).update(bank_name=bank)
-            print(bank)
         except:
             pass
         try:
             acc_no = request.POST['acc_no']
-            Dealer.objects.filter(user=user).update(account_number=acc_no)
-            print(acc_no)
+            Dealer.objects.filter(user=user).update(account_number=acc_no,kyc_verified=False)
         except:
             pass
         try:
             acc_type = request.POST['acc_type']
             if len(acc_type)>0:
-
-                Dealer.objects.filter(user=user).update(account_type=acc_type)
-            print(acc_type)
+                Dealer.objects.filter(user=user).update(account_type=acc_type,kyc_verified=False)
         except:
             pass
         try:
             ifsc = request.POST['ifsc']
             if len(ifsc)>0:
-                Dealer.objects.filter(user=user).update(ifsc_code=ifsc)
-            print(ifsc)
+                Dealer.objects.filter(user=user).update(ifsc_code=ifsc,kyc_verified=False)
         except:
             pass
         return redirect('dealer:current')

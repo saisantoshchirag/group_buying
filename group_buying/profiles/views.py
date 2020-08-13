@@ -63,6 +63,10 @@ def profile(request,name):
 
 @login_required(login_url='/loginmodule/login/')
 def create(request):
+    userprofile = UserProfile.objects.filter(user=request.user).values()
+    if len(userprofile) > 0:
+        return redirect('view',name=request.user)
+
     if request.method == 'POST':
         pincode = request.POST.get('pincode')
         phone_number = request.POST.get('phone_number')
@@ -70,10 +74,10 @@ def create(request):
         state = request.POST.get('state')
         gender = request.POST.get('gender')
         user_type= request.POST.get('user_type')
-        if user_type=='dealer':
-            UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user,is_dealer=False)
-        if user_type=='user':
-            UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
+        # if user_type=='dealer':
+        #     UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user,is_dealer=False)
+        # if user_type=='user':
+        UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
         try:
             return redirect(request.GET.get('next'))
         except:

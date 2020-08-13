@@ -73,7 +73,7 @@
 </div>
 
 <div id="chat-input-area">
-    <form id="send-form" action="{% url 'message' context.room_id %}"  method="post" enctype="multipart/form-data">
+    <form id="send-form" action="{% url 'chat:message' context.room_id %}"  method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table style="width: 100%">
             <input type="hidden" name="from" value="{{ user }}">
