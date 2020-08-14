@@ -41,6 +41,8 @@
 {#</div>#}
 <div id="chat-elements">
     <div id="chat-log">
+    <button onClick="window.location.reload();">Refresh Page</button>
+
 {#            <img src="/media/{{ i.image }}" alt="ia" width="200px" height="200px">#}
         {% for msg,isg in context.messages.items %}
             <center>{{ msg }}</center>
@@ -52,7 +54,7 @@
                 {{ i.text }}
                 {% if i.is_delete %}
 
-                    <a href="{% url 'delete' context.room_id i.id %}"><i class="fa fa-trash"></i> </a>
+                    <a href="{% url 'chat:delete' context.room_id i.id %}"><i class="fa fa-trash"></i> Delete message </a>
                 {% endif %}
                 {% if i.document %}e
                      <a href="/media/{{ i.document}}" target="_blank" class="btn btn-primary" > {{ i.document }}</a>

@@ -43,7 +43,7 @@ def update(request):
                 UserProfile.objects.filter(user=request.user).update(pincode=request.POST['pincode'])
             except:
                 UserProfile.objects.filter(user=request.user).update(pincode=cur_pincode)
-            return redirect('view')
+            return redirect('view',name=request.user)
     else:
         form = UpdateForm()
     return render(request,'profiles/update.html',{'form':form})

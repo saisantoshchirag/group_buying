@@ -4,19 +4,9 @@
     <list default="true" id="0fe96efd-5410-4cee-b81e-b70dc239991a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/chat/templates/chat/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/templates/chat/chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/chat/templates/chat/rooms.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/templates/chat/rooms.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/dealer/templates/dealer/current.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/dealer/templates/dealer/current.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/dealer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/dealer/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/group_buying/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/group_buying/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/home/templates/base_layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/home/templates/base_layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/profiles/templates/profiles/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/templates/profiles/update.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/staff/templates/staff/confirm.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/staff/templates/staff/confirm.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/staff/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/staff/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/staff/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/staff/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +117,8 @@
       <workItem from="1596088589487" duration="3011000" />
       <workItem from="1596606669773" duration="1443000" />
       <workItem from="1596617698517" duration="716000" />
-      <workItem from="1597024956894" duration="52590000" />
+      <workItem from="1597024956894" duration="52835000" />
+      <workItem from="1597379391223" duration="3656000" />
     </task>
     <servers />
   </component>

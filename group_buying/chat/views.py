@@ -20,9 +20,9 @@ def home(request, room_id):
             usernames = []
             for i in range(len(chat_users)):
                 userss = User.objects.filter(id=chat_users[i]['user_id']).values()
-                print(userss)
                 usernames.append(userss[0]['username'])
-                print(chat_users[i])
+                # print(chat_users[i])
+
             cmsgs = ChatMessage.objects.filter(
                 room=room).order_by('date')[:50].values()
             msgs = []
@@ -39,6 +39,7 @@ def home(request, room_id):
         context1['room_id'] = room_id
         context1['messages'] = result
         context1['user'] = user
+        print(usernames)
         return render(request, 'chat/chat.html', {'context':context1,'username':usernames})
     else:
         context = {}
@@ -77,14 +78,14 @@ def messages(request, room_id):
         if not any(fields):
             return HttpResponseRedirect(path)
         ChatMessage.objects.create(room=room,user=mfrom,text=text,document=file,image=img)
-        return redirect('home',room_id=room_id)
+        return redirect('chat:home',room_id=room_id)
     else:
         return HttpResponseNotAllowed(['POST'])
 
 
 def delete(request,room,id):
     ChatMessage.objects.filter(id=id).delete()
-    return redirect('home', room_id=room)
+    return redirect('chat:home', room_id=room)
 
 @login_required(login_url='/loginmodule/login/')
 def rooms(request):
@@ -108,11 +109,11 @@ def join(request,room_id):
     rooms = ChatRoom.objects.filter(eid=room_id)
     UserProfile.objects.filter(user=request.user).update(room=room_id)
     ChatUser.objects.create(chat=rooms[0],user=request.user)
-    return redirect('home',room_id=room_id)
-
+    return redirect('chat:home',room_id=room_id)
+ 
 def create_room(request):
     id = 0
-    for i in ChatRoom.objects.all().values():
+    for i in ChatRoom.objects.all().    values():
         id = max(id, i['id'])
     if request.method == 'POST':
         # id_post = request.POST['id']
