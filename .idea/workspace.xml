@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0fe96efd-5410-4cee-b81e-b70dc239991a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/chat/templates/chat/chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/templates/chat/chat.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/chat/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/group_buying/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group_buying/profiles/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/group_buying/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/group_buying/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/group_buying/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/group_buying/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/group_buying/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/group_buying/profiles/models.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/group_buying/group_buying" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/group_buying" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
@@ -118,7 +119,10 @@
       <workItem from="1596606669773" duration="1443000" />
       <workItem from="1596617698517" duration="716000" />
       <workItem from="1597024956894" duration="52835000" />
-      <workItem from="1597379391223" duration="3656000" />
+      <workItem from="1597379391223" duration="4303000" />
+      <workItem from="1598001609456" duration="2249000" />
+      <workItem from="1598099700490" duration="1784000" />
+      <workItem from="1598107175694" duration="6512000" />
     </task>
     <servers />
   </component>

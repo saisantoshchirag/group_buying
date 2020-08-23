@@ -15,6 +15,7 @@ class UserProfile(models.Model):
     is_dealer = models.BooleanField('dealer status',default=False)
     is_user = models.BooleanField('user status',default=True)
     is_admin = models.BooleanField('admin status',default=False)
+    is_subscribed = models.BooleanField('subscription status',default=False)
 
 class ChangePassword(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

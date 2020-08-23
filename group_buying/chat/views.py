@@ -11,6 +11,8 @@ def home(request, room_id):
     user = UserProfile.objects.filter(user=request.user).values()
     if not room_id == str(user[0]['room_id']):
         return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
+    if not user[0]['is_subscribed']:
+        return redirect('payment:home')
     if user:
         try:
             result = {}
@@ -106,11 +108,13 @@ def join(request,room_id):
         userprofile = UserProfile.objects.filter(user=request.user).values()
     except:
         return redirect('create')
+    if not userprofile[0]['is_subscribed']:
+        return redirect('payment:home')
     rooms = ChatRoom.objects.filter(eid=room_id)
     UserProfile.objects.filter(user=request.user).update(room=room_id)
     ChatUser.objects.create(chat=rooms[0],user=request.user)
     return redirect('chat:home',room_id=room_id)
- 
+
 def create_room(request):
     id = 0
     for i in ChatRoom.objects.all().    values():

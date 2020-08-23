@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'chat',
     'social_django',
     'dealer',
-    'staff'
-
+    'staff',
+    'payment'
 ]
 
 MIDDLEWARE = [

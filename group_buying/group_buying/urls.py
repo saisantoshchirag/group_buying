@@ -25,7 +25,8 @@ urlpatterns = [
     path('profile/',include('profiles.urls')),
     path('chat/',include('chat.urls')),
     path('dealer/',include('dealer.urls')),
-    path('staff/',include('staff.urls'))
+    path('staff/',include('staff.urls')),
+    path('payments/',include('payment.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
