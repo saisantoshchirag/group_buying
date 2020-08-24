@@ -109,7 +109,7 @@ def join(request,room_id):
     except:
         return redirect('create')
     if not userprofile[0]['is_subscribed']:
-        return redirect('payment:home')
+        return redirect('payment:Checkout')
     rooms = ChatRoom.objects.filter(eid=room_id)
     UserProfile.objects.filter(user=request.user).update(room=room_id)
     ChatUser.objects.create(chat=rooms[0],user=request.user)
