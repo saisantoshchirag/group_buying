@@ -9,7 +9,17 @@
     <br><br>
     <form action="{% url 'chat:create' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="car">
+        <label for="car">Room name</label>
+    <input type="text"  id="car" name="car">
+                <label for="loc">Location</label>
+
+    <input type="text" id="loc" name="location">
+                <label for="vehic">Vehicle name</label>
+    <input type="text" name="vehicle" id="vehic">
+                <label for="brand">Brand name</label>
+    <input type="text" name="brand" id="brand">
+        <label for="limit">Maximum limit of the room</label>
+    <input type="number" name="limit" id="limit">
     <input type="submit">
     </form>
 

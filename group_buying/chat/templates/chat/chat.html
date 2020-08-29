@@ -62,7 +62,6 @@
                 {% endif %}
                 {% if i.image %}
                     {{ i.image }}
-
                     <img src="/media/{{ i.image }}" alt="Image" height="200px" width="200px">
                <br />
                 {% endif %}
@@ -74,6 +73,7 @@
     </div>
 </div>
 
+{% if request.user.is_staff %}
 <div id="chat-input-area">
     <form id="send-form" action="{% url 'chat:message' context.room_id %}"  method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -98,6 +98,7 @@
         </table>
     </form>
 </div>
+{% endif %}
 {% for user in username %}
     <a href="{% url 'view' user %}"> {{ user }} </a>
 {% endfor %}

@@ -53,13 +53,14 @@ def profile(request,name):
     user = User.objects.filter(username=name).values()
     userprofile = user[0]['id']
     user = UserProfile.objects.filter(user_id=userprofile).values()
+    print(user[0]['phone_verified'])
     is_user = name==str(request.user)
     if not user and is_user:
         return redirect('create')
     if not user and not is_user:
         return HttpResponse('<html><script>alert("Profile Doesnot exist");window.location="/";</script></html>')
 
-    return render(request,'profiles/profile.html',{'user':request.user,'is_user':is_user})
+    return render(request,'profiles/profile.html',{'user':request.user,'is_user':is_user,'is_phone_verified':user[0]['phone_verified']})
 
 @login_required(login_url='/loginmodule/login/')
 def create(request):
@@ -73,16 +74,23 @@ def create(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
         gender = request.POST.get('gender')
-        user_type= request.POST.get('user_type')
-        # if user_type=='dealer':
-        #     UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user,is_dealer=False)
-        # if user_type=='user':
-        UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user)
-        try:
-            return redirect(request.GET.get('next'))
-        except:
 
-            return redirect('view',name=request.user)
+        UserProfile.objects.create(state=state,city=city,gender=gender,pincode=pincode,phone_number=phone_number,user=request.user,phone_verified=False)
+        code = get_random_string(length=6, allowed_chars='0123456789')
+        otps = ChangePassword.objects.filter(user=request.user)
+        if otps:
+            ChangePassword.objects.filter(user=request.user).delete()
+        ChangePassword.objects.create(user=request.user, code=code, phone_number=phone_number)
+        account_sid = 'ACc3334be22f266fb10c6ce4e77a660264'
+        auth_token = '992760989874ce665f4523ae6d16be3f'
+        client = Client(account_sid, auth_token)
+        body = 'Please verify your phone number.OTP: ' + str(code) + '. Do not share with anyone!!!'
+        message = client.messages.create(
+            body=body,
+            from_='+12058436831',
+            to='+91' + str(phone_number)
+        )
+        return render(request,'profiles/otp.html')
     return render(request,'profiles/create.html')
 
 def phone_number(request):
@@ -107,7 +115,7 @@ def change_phone(request):
             ChangePassword.objects.filter(user=request.user).delete()
         ChangePassword.objects.create(user=request.user,code=code,phone_number=phone)
         account_sid = 'ACc3334be22f266fb10c6ce4e77a660264'
-        auth_token = '10bd2993779bd0521f9383353b7068f2'
+        auth_token = '992760989874ce665f4523ae6d16be3f'
         client = Client(account_sid, auth_token)
         body = 'Please verify your phone number.OTP: '+str(code) + '. Do not share with anyone!!!'
         message = client.messages.create(
@@ -120,9 +128,31 @@ def change_phone(request):
 def validate_otp(request):
     obj = ChangePassword.objects.filter(user=request.user).values()
     if request.POST['otp'] == str(obj[0]['code']):
-        UserProfile.objects.filter(user=request.user).update(phone_number=obj[0]['phone_number'])
+        UserProfile.objects.filter(user=request.user).update(phone_number=obj[0]['phone_number'],phone_verified=True)
     ChangePassword.objects.filter(user=request.user).delete()
-    return redirect('view')
+    return redirect('view',name=request.user)
+
+def verify_phone(request):
+    user = User.objects.filter(username=request.user).values()
+    userprofile = user[0]['id']
+    user = UserProfile.objects.filter(user_id=userprofile).values()
+    code = get_random_string(length=6, allowed_chars='0123456789')
+    otps = ChangePassword.objects.filter(user=request.user)
+    phone = user[0]['phone_number']
+    if otps:
+        ChangePassword.objects.filter(user=request.user).delete()
+    ChangePassword.objects.create(user=request.user, code=code, phone_number=phone)
+    account_sid = 'ACc3334be22f266fb10c6ce4e77a660264'
+    auth_token = '992760989874ce665f4523ae6d16be3f'
+    client = Client(account_sid, auth_token)
+    body = 'Please verify your phone number.OTP: ' + str(code) + '. Do not share with anyone!!!'
+    message = client.messages.create(
+        body=body,
+        from_='+12058436831',
+        to='+91' + str(phone)
+    )
+    return render(request,'profiles/otp.html')
+
 
 def isValid(s):
     Pattern = re.compile("(0/91)?[6-9][0-9]{9}")

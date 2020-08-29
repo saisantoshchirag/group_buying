@@ -116,7 +116,7 @@ def verify_reset_password(request, uidb64, token):
     except(TypeError, ValueError, OverflowError):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        login(request, user)
+        login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # request.session['email'] = user['email']
         return render(request,'Accounts/save_password.html',{})
     else:

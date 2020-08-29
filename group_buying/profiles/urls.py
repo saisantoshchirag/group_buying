@@ -10,5 +10,6 @@ urlpatterns = [
     path('create/',views.create,name='create'),
     path('phone',views.phone_number,name='phone_number'),
     path('change',views.change_phone,name='change_phone'),
-    path('otp',views.validate_otp,name='otp')
+    path('otp',views.validate_otp,name='otp'),
+    path('verify',views.verify_phone,name='verify_phone')
 ]

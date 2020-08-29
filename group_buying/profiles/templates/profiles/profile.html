@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">
-{#        <link rel="stylesheet" href="{% static "main.css" %}">#}
+    {#        <link rel="stylesheet" href="{% static "main.css" %}">#}
 
     <style>
-    h3{
-        margin-top: 20px;
-        margin-left: 20px;
-    }
-            .btn1 {
+        h3{
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+        .btn1 {
             white-space: normal;
             background-color: #007d91;
             color: white;
@@ -34,23 +34,27 @@
     </style>
 {% endblock headblock %}
 {% block content %}
-<center>
-    <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
-    <h3>{{ user.userprofile.city }}</h3>
-    <h3>{{ user.userprofile.state }}</h3>
-    <h3>{{ user.userprofile.phone_number }}</h3>
-    <h3>{{ user.userprofile.pincode }}</h3>
-    <h3>{{ user.userprofile.gender }}</h3>
-    {% if is_user %}
-        <a href="{% url 'update' %}"><button class="btn1"> Edit Profile</button> </a><br>
-        <a href="{% url 'phone_number' %}"><button class="btn1">Change Phone Number</button></a>
-    {% endif %}
-    {#    {% for use in user %}#}
-{#        {{ use.gender }}#}
-{#        {{ use.city }}#}
-{#        {{ use.state }}#}
-{#        {{ use.pincode }}#}
-{#        {{ use.phonenumber }}#}
-{#        <img src="{{ use.image.url }}">#}
-{#    {% endfor %}#}
+    <center>
+        <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
+        <h3>{{ user.userprofile.city }}</h3>
+        <h3>{{ user.userprofile.state }}</h3>
+        <h3>{{ user.userprofile.phone_number }}</h3>
+        <h3>{{ user.userprofile.pincode }}</h3>
+        <h3>{{ user.userprofile.gender }}</h3>
+        {% if is_user %}
+            <a href="{% url 'update' %}"><button class="btn1"> Edit Profile</button> </a><br>
+            {% if is_phone_verified %}
+                <a href="{% url 'phone_number' %}"><button class="btn1">Update Phone Number</button></a>
+            {% else %}
+                <a href="{% url 'verify_phone' %}"><button class="btn1"> Verify Phone Number</button> </a>
+            {% endif %}
+        {% endif %}
+        {#    {% for use in user %}#}
+        {#        {{ use.gender }}#}
+        {#        {{ use.city }}#}
+        {#        {{ use.state }}#}
+        {#        {{ use.pincode }}#}
+        {#        {{ use.phonenumber }}#}
+        {#        <img src="{{ use.image.url }}">#}
+        {#    {% endfor %}#}
 {% endblock content %}

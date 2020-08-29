@@ -16,6 +16,9 @@ class UserProfile(models.Model):
     is_user = models.BooleanField('user status',default=True)
     is_admin = models.BooleanField('admin status',default=False)
     is_subscribed = models.BooleanField('subscription status',default=False)
+    subscription_start = models.DateTimeField(blank=True,null=True)
+    subscription_end = models.DateTimeField(blank=True,null=True)
+    phone_verified = models.BooleanField(default=False)
 
 class ChangePassword(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)

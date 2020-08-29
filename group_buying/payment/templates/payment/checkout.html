@@ -1,59 +1,117 @@
-{% block title%} Checkout - PERF {% endblock %}
-{% block body %}
-<div class="container">
-    <div class="col my-4">
-        <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
-        <div class="my-4">
-            <ul class="list-group" id="items">
-            </ul>
-            Total Price:<span id="totalPrice"></span>
-        </div>
-    </div>
-    <div class="col my-4">
-        <h2>Step 2 - Enter Address & Other Details:</h2>
-        <form method="post" action="/payments/payment/">{% csrf_token %}
-            <input type="hidden" name="itemsJson" id="itemsJson">
-            <input type="hidden" name="formprice" id="formprice">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputname">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="address1" name="address1" placeholder="1234 Main St">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Address line 2</label>
-                <input type="text" class="form-control" id="address2" name="address2" placeholder="Apartment, studio, or floor">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="city" name="city">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <input type="text" class="form-control" id="state" name="state"  placeholder="Enter State">
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="zip_code" name="zip_code">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputZip">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone">
-            </div>
-            <button type="submit" class="btn btn-primary">Place Order</button>
+{% extends 'base_layout.html' %}
+{% block headblock %}
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6{
+            font-weight: 200;
+        }
+
+        h1{
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2fcc71;
+            max-width: 40%;
+            margin: 20px auto;
+        }
+
+        /* CONTAINERS */
+
+        .container {max-width: 850px; width: 100%; margin: 0 auto;}
+        .four { width: 32.26%; max-width: 32.26%;}
+
+
+        /* COLUMNS */
+
+        .col {
+            display: block;
+            float:left;
+            margin: 1% 0 1% 1.6%;
+        }
+
+        .col:first-of-type { margin-left: 0; }
+
+        /* CLEARFIX */
+
+        .cf:before,
+        .cf:after {
+            content: " ";
+            display: table;
+        }
+
+        .cf:after {
+            clear: both;
+        }
+
+        .cf {
+            *zoom: 1;
+        }
+
+        /* FORM */
+
+        .form .plan input, .form .payment-plan input, .form .payment-type input{
+            display: none;
+        }
+
+        .form label{
+            position: relative;
+            color: #fff;
+            background-color: #aaa;
+            font-size: 26px;
+            text-align: center;
+            height: 150px;
+            line-height: 150px;
+            display: block;
+            cursor: pointer;
+            border: 3px solid transparent;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .form .plan input:checked + label, .form .payment-plan input:checked + label, .form .payment-type input:checked + label{
+            border: 3px solid #333;
+            background-color: #2fcc71;
+        }
+
+        .form .plan input:checked + label:after, form .payment-plan input:checked + label:after, .form .payment-type input:checked + label:after{
+            content: "\2713";
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 100%;
+            border: 2px solid #333;
+            background-color: #2fcc71;
+            z-index: 999;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+
+
+    </style>
+{% endblock headblock %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+
+        <h1>Checkout Form</h1>
+        <form class="form cf" action="{% url 'payment:payment' %}" method="post">
+            {% csrf_token %}
+            <section class="plan cf">
+                <h2>Choose a plan:</h2>
+                <input type="radio" name="radio1" id="free" value="300"><label class="free-label four col" for="free">Quarterly Total: Rs.300</label>
+                <input type="radio" name="radio1" id="basic" value="600" checked><label class="basic-label four col" for="basic">Half-Yearly Total: Rs.600</label>
+                <input type="radio" name="radio1" id="premium" value="1200"><label class="premium-label four col" for="premium">Yearly Total: Rs.1200</label>
+            </section>
+            <input type="submit">
         </form>
     </div>
-</div>
-{% endblock %}
-{% block js %}
-{% endblock %}
+{% endblock content %}
