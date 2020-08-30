@@ -51,8 +51,11 @@ def update(request):
 @login_required(login_url='/loginmodule/login/')
 def profile(request,name):
     user = User.objects.filter(username=name).values()
+
     userprofile = user[0]['id']
     user = UserProfile.objects.filter(user_id=userprofile).values()
+    user1 = UserProfile.objects.get(user_id=userprofile)
+    print(user1.isadmin())
     print(user[0]['phone_verified'])
     is_user = name==str(request.user)
     if not user and is_user:

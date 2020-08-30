@@ -1,3 +1,4 @@
+
 {% load static %}
 {#{% load socialaccount %}#}
 {#{% provider_login_url %}#}
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
@@ -55,29 +57,6 @@
     </style>
 {% endblock headblock %}
 
-{% if messages %}
-
- 	<style type="text/css">
- 		div.messages{
- 			background-color: #ff6b6b;
- 			color: #f7fff7;
-            display: none;
- 		}
- 		ul.messages{
- 			list-style-type: none;
- 		}
- 	</style>
-
-    <div class='messages'>
-
-    <ul class="messages">
-    {% for message in messages %}
-    <li>{% if message.tags %} {% endif %}>{% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}</li>
-    {% endfor %}
-    </ul>
-
-    </div>
-{% endif %}
 
 {% block content %}
     <div class="login-page">

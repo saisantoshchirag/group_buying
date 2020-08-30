@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -145,7 +145,13 @@ EMAIL_PORT = 587
 
 LOGIN_REDIRECT_URL = 'home'
 # LOGIN_URL = '/loginmodule/auth/login/google-oauth2/'
-# #
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'#
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='954938060767-e3ul4f15ei80kn2op09841sm1hvh4lkp.apps.googleusercontent.com'  #Paste CLient Key

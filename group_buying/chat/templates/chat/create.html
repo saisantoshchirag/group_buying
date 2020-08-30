@@ -9,8 +9,6 @@
     <br><br>
     <form action="{% url 'chat:create' %}" method="post">
     {% csrf_token %}
-        <label for="car">Room name</label>
-    <input type="text"  id="car" name="car">
                 <label for="loc">Location</label>
 
     <input type="text" id="loc" name="location">

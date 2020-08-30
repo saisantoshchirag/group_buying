@@ -32,6 +32,7 @@ def signup(request):
                     'token':account_activation_token.make_token(user),}
             message = render_to_string('Accounts/acc_active_email.html', data)
             to_email = form.cleaned_data.get('email')
+            print(to_email)
             # to_email = 'saisantosh.c17@iiits.in'
             send_mail(mail_subject, message, 'santosh.265559@gmail.com', [to_email])
 

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from dealer.models import Dealer
 from profiles.models import UserProfile
 from django.contrib.auth.models import User
@@ -22,4 +22,4 @@ def update_status(request,user_id,status):
         dealer = Dealer.objects.filter(user=user_id).update(kyc_verified=True)
         UserProfile.objects.filter(user_id=user_id).update(is_dealer=True)
         UserProfile.objects.filter(user_id=user_id).update(is_user=False)
-    return HttpResponse('status updated')
+    return redirect(request,'staff:update_status')

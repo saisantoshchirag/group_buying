@@ -13,8 +13,10 @@ def home(request, room_id):
     user = UserProfile.objects.filter(user=request.user).values()
     print(user)
     use1 = UserProfile.objects.filter(user=request.user,subscription_end__gte=datetime.datetime.now()).values()
-    print(use1)
-    if not room_id == str(user[0]['room_id']):
+    print('entered room',room_id)
+    print('joined rooms',user[0]['joined'])
+    print('bool',int(room_id) in user[0]['joined'])
+    if int(room_id) not in user[0]['joined']:
         return HttpResponse('<html><script>alert("You are not part of this room. Please join you own room");window.location="/chat";</script></html>')
     if not user[0]['is_subscribed']:
         return redirect('payment:Checkout')
@@ -28,7 +30,7 @@ def home(request, room_id):
     if user:
         try:
             result = {}
-            room = ChatRoom.objects.get(eid=room_id)
+            room = ChatRoom.objects.get(id=room_id)
             chat_users = ChatUser.objects.filter(chat=room).values()
             usernames = []
             for i in range(len(chat_users)):
@@ -99,12 +101,18 @@ def rooms(request):
     if len(userprofile) == 0:
         return redirect('create')
     room = UserProfile.objects.filter(user=request.user).values()[0]['room_id']
+    joined_rooms = UserProfile.objects.filter(user=request.user).values()[0]['joined']
+    # print(rooms)
+    print(room)
     if room is None:
         room = ''
     rooms = ChatRoom.objects.all().values()
     user = User.objects.filter(username=request.user)
+    # use = UserProfile.objects.filter(user=request.user).update(joined=[])
+    print(rooms)
+    print(joined_rooms)
     is_staff = user.values()[0]['is_staff']
-    return render(request,'chat/rooms.html',{'rooms':rooms,'is_staff':is_staff,'room_user':room})
+    return render(request,'chat/rooms.html',{'rooms':rooms,'is_staff':is_staff,'room_user':joined_rooms})
 
 
 def join(request,room_id):
@@ -119,7 +127,8 @@ def join(request,room_id):
         Messgs.success(request,'You already in a room.')
         return redirect('chat:rooms')
     rooms = ChatRoom.objects.filter(eid=room_id)
-    UserProfile.objects.filter(user=request.user).update(room=room_id)
+    UserProfile.objects.filter(user=request.user).update(room=room_id,joined=[room_id])
+
     ChatUser.objects.create(chat=rooms[0],user=request.user)
     return redirect('chat:home',room_id=room_id)
 
@@ -128,12 +137,16 @@ def create_room(request):
     for i in ChatRoom.objects.all().values():
         id = max(id, i['id'])
     if request.method == 'POST':
-        # id_post = request.POST['id']
-        name = request.POST['car']
         vehicle = request.POST['vehicle']
         brand = request.POST['brand']
         limit = request.POST['limit']
         location = request.POST['location']
+        name = vehicle + ' ' + brand + ' ' + location
         ChatRoom.objects.create(eid=id+1,name=name,max_limit = limit,location=location,brand = brand,vehicle=vehicle)
+        rooms = ChatRoom.objects.filter(eid=id+1)
+        ChatUser.objects.create(chat=rooms[0], user=request.user)
+        joined_rooms = UserProfile.objects.get(user=request.user).joined
+        joined_rooms.append(id+1)
+        UserProfile.objects.filter(user=request.user).update(joined=joined_rooms)
         return redirect('chat:rooms')
     return render(request,'chat/create.html',{'id':id+1})

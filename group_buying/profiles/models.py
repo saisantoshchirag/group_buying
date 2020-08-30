@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from chat.models import ChatRoom
+from jsonfield import JSONField
 # Create your models here.
 
 class UserProfile(models.Model):
@@ -19,7 +20,12 @@ class UserProfile(models.Model):
     subscription_start = models.DateTimeField(blank=True,null=True)
     subscription_end = models.DateTimeField(blank=True,null=True)
     phone_verified = models.BooleanField(default=False)
+    joined = JSONField(null=True)
 
+    def isadmin(self):
+        return self.is_admin
+    def isdealer(self):
+        return self.is_dealer
 class ChangePassword(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone_number = models.IntegerField()
