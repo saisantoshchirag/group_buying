@@ -18,12 +18,32 @@
       {% for error in field.errors %}
       <p style="color: red">{{ error }}</p>
       {% endfor %}
-    </p>
+
     {% endfor %}
+{#  <label for="show">Show Password</label>#}
+  <input type="checkbox" onclick="myFunction()" style="float: left" id="show">
+
     <button type="submit" class="loginpage-loginbutton">Sign up</button>
     <p class="message">Already registered? <a href="{% url 'login' %}">Login Here</a></p>
     <br>
-{% comment %} <button type="su" class="button_cont" align="center"><a class="example_c" href="add-website-here" target="_blank" rel="nofollow noopener">Add Call to Action</a></div>  {% endcomment %}
   </form>
 </div>
+    <script>
+function myFunction() {
+    var x = document.getElementById("pass1");
+    var x1 = document.getElementById("pass2");
+
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+    if (x1.type === "password") {
+        x1.type = "text";
+    } else {
+        x1.type = "password";
+    }
+}
+</script>
+
 {% endblock %}

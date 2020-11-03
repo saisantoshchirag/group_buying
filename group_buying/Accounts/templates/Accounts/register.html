@@ -1,40 +1,56 @@
 {% load static %}
 
 <html>
-	<head>
-		<title>{% block title %} {% endblock %}</title>
-		<!--<link rel="icon" href="imageset/favicon.png">-->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+    <title>{% block title %} {% endblock %}</title>
+    <!--<link rel="icon" href="imageset/favicon.png">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-		<link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
-		<!--<link rel="stylesheet" href="{% static "css/style.css" %}">-->
-		<script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
-		<script src="{% static "js/materialize.min.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/materialize.min.css" %}">
+    <!--<link rel="stylesheet" href="{% static "css/style.css" %}">-->
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "js/materialize.min.js" %}"></script>
+    <script src="{% static "js/script.js" %}"></script>
+</head>
 
-		<script src="{% static "js/script.js" %}"></script>
-	</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            Materialize.toast('{{ message }}', 3000);
+        </script>
+    {% endfor %}
+{% endif %}
+<div class="container center-align">
+    <h1>Register</h1>
+    <div class="row">
+        <form action="{% url 'loginmodule_register' %}" class="col s12" method="post">{% csrf_token %}
+            {#            {{u_form}}#}
+            <button type="submit" class="btn">Register</button>
+            <tr><th><label for="id_username">Username:</label></th><td><input type="text" name="username" autocomplete="off" placeholder="Username" maxlength="200" autofocus required id="id_username
+"><br><span class="helptext">Required</span></td></tr>
+            <tr><th><label for="id_email">Email:</label></th><td><input type="text" name="email" autocomplete="off" placeholder="Email" maxlength="200" required id="id_email"><br><span class="helpte
+xt">Required</span></td></tr>
+            <tr><th><label for="id_password1">Password1:</label></th><td><input type="password" name="password1" autocomplete="off" placeholder="Password" data-toggle="password" maxlength="200" required id="id_password1"><br><span class="helptext">Required</span></td></tr>
+            <tr><th><label for="id_password2">Password2:</label></th><td><input type="password" name="password2" autocomplete="off" placeholder="Confirm Password" data-toggle="password" maxlength="2
+00" required id="id_password2"><br><span class="helptext">Required</span></td></tr>
+<input type="button" onclick="myFunction()">Show Password
 
-	<body>
-		{% if messages %}
-			{% for message in messages %}
-					<script>
-						Materialize.toast('{{ message }}', 3000);
-					</script>
-			{% endfor %}
-		{% endif %}
-    <div class="container center-align">
-      <h1>Register</h1>
-			<div class="row">
-				<form action={% url 'loginmodule_register' %} method="POST" class="col s12">{% csrf_token %}
-					{{u_form}}
-                    		        	<button type="submit" class="btn">Register</button>
-
-                          	</form>
-			</div>
+        </form>
     </div>
-		        {% comment %} <a href={% url 'loginmodule_register' %}>	<button class="btn">Signup</button> </a> {% endcomment %}
+</div>
+<script>
+function myFunction() {
+  var x = document.getElementsByTagName("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}</script>
 
 </body>
 </html>

@@ -22,4 +22,4 @@ def update_status(request,user_id,status):
         dealer = Dealer.objects.filter(user=user_id).update(kyc_verified=True)
         UserProfile.objects.filter(user_id=user_id).update(is_dealer=True)
         UserProfile.objects.filter(user_id=user_id).update(is_user=False)
-    return redirect(request,'staff:update_status')
+        return redirect('home')

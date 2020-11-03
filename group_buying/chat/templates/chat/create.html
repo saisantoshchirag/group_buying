@@ -1,11 +1,12 @@
 {% extends 'base_layout.html' %}
-
+{% load static %}
 {% block headblock %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//geodata.solutions/includes/statecity.js"></script>
 
 {% endblock headblock %}
 
 {% block content %}
-    {{ id }}
     <br><br>
     <form action="{% url 'chat:create' %}" method="post">
     {% csrf_token %}
@@ -20,5 +21,14 @@
     <input type="number" name="limit" id="limit">
     <input type="submit">
     </form>
+<input type="hidden" name="country" id="countryId" value="IN"/>
+      <h3>State</h3>
+      <select name="state" class="states " id="stateId">
+    <option value="">Select State</option>
+</select>
+      <h3>City</h3>
+      <select name="city" class="cities " id="cityId">
+    <option value="">Select City</option>
+</select>
 
 {% endblock content %}

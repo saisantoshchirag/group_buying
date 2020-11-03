@@ -16,7 +16,7 @@
                     {% if room_user %}
 
                         {% for chat_room in room_user %}
-                            {% if chat_room == room.id %}
+                            {% if chat_room == room.eid|add:"0" %}
                                 <a href="{% url 'chat:home' room.id %}">  <h1>Go to room</h1> </a>
                             {% else %}
 

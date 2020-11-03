@@ -13,8 +13,8 @@ choices = [
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=200, help_text='Required',widget = forms.TextInput(attrs={'autocomplete':'off', 'placeholder': 'Email'}))
     username = forms.CharField(max_length=200, help_text='Required',widget = forms.TextInput(attrs={'autocomplete':'off', 'placeholder': 'Username'}))
-    password1 = forms.CharField(max_length=200, help_text='Required',widget = forms.PasswordInput(attrs={'autocomplete':'off', 'placeholder': 'Password'}))
-    password2 = forms.CharField(max_length=200, help_text='Required',widget = forms.PasswordInput(attrs={'autocomplete':'off', 'placeholder': 'Confirm Password'}))
+    password1 = forms.CharField(max_length=200, help_text='Required',widget = forms.PasswordInput(attrs={'autocomplete':'off', 'placeholder': 'Password','data-toggle': 'password','id':'pass1'}))
+    password2 = forms.CharField(max_length=200, help_text='Required',widget = forms.PasswordInput(attrs={'autocomplete':'off', 'placeholder': 'Confirm Password','data-toggle': 'password','id':'pass2'}))
     
     # email = forms.EmailField(max_length=200, help_text='Required')
     class Meta:
@@ -27,6 +27,4 @@ class SignupForm(UserCreationForm):
         if r.count():
             raise ValidationError("Email already exists")
         return email
-
-
 

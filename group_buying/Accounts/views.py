@@ -16,14 +16,12 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 
 def signup(request):
-    print(' int ot the signup')
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            print('user save')
             current_site = get_current_site(request)
             mail_subject = 'Activate your blog account.'
             data = {'user': user,
@@ -32,13 +30,10 @@ def signup(request):
                     'token':account_activation_token.make_token(user),}
             message = render_to_string('Accounts/acc_active_email.html', data)
             to_email = form.cleaned_data.get('email')
-            print(to_email)
-            # to_email = 'saisantosh.c17@iiits.in'
             send_mail(mail_subject, message, 'santosh.265559@gmail.com', [to_email])
 
             return render(request,'Accounts/send.html')
     else:
-        print('in to the else signup')
         form = SignupForm()
     return render(request, 'Accounts/signup.html', {'form': form})
 
@@ -55,7 +50,7 @@ def activate(request, uidb64, token):
 
 def signin(request):
     if request.user.is_authenticated:
-        messages.success(request, 'You are Logged in.')
+        messages.success(request, 'You are already Logged in.')
         return redirect('home')
     else:
         c = {}
@@ -69,7 +64,6 @@ def auth_view(request):
     if user is not None:
         auth.login(request, user)
         messages.success(request, 'You are Logged in.')
-
         try:
             UserProfile.objects.filter(user=request.user)
         except:
@@ -82,9 +76,6 @@ def auth_view(request):
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)
-    messages.success(request, 'You are Successfully Logged Out')
-    messages.success(request, 'Thanks for visiting')
-    # messages.add_message(request, messages.INFO, 'Thanks for visiting.')
     return redirect('login')
 
 def reset_display(request):
@@ -105,20 +96,17 @@ def reset_password(request):
         email = 'saisantosh.c17@iiits.in'
         send_mail(mail_subject, message, 'santosh.265559@gmail.com', [email])
         return render(request,'Accounts/password_reset_form.html')
-
     else:
         return redirect('registration:reset_display')
 
 def verify_reset_password(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        print(uid)
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         login(request, user,backend='django.contrib.auth.backends.ModelBackend')
-        # request.session['email'] = user['email']
         return render(request,'Accounts/save_password.html',{})
     else:
         return HttpResponse('Activation link is invalid!')
@@ -127,9 +115,7 @@ def verify_reset_password(request, uidb64, token):
 def save_password(request):
     email = request.user.email
     user = User.objects.get(email=email)
-    # print(user)
     new_password  = request.POST.get('password')
-    # print(new_password)
     password = hashlib.sha256(new_password.encode())
     password = password.hexdigest()
     user.set_password(new_password)
