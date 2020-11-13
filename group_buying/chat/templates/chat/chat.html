@@ -7,44 +7,17 @@
     <title>Chat</title>
     <meta name="description" content="Chat">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-{#    <link rel="stylesheet" type="text/css" href="{% static 'nomalize.min.css' %}">#}
-{#    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">#}
-
     <script src="{% static 'django_eventstream/json2.js' %}"></script>
     <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
     <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
     <script src="{% static 'jquery-3.2.1.min.js' %}"></script>
-{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">#}
 
 </head>
 <body>
-<header id="chat-header">
-    <span id="user-label">{{ user }}</span>
-    <span>#{{ context.room_id }}</span>
-</header>
-{##}
-{#<div id="chat-elements">#}
-{#    <div id="chat-log">#}
-{#        {% for msg in messages %}#}
-{#            {{ msg }}#}
-{#            <img src="/media{{ msg.image.url }}" alt="dvs">#}
-{#            <b>{{ msg.user }}</b>: {{ msg.text }}  Date: {{ msg.date }} Time: {{ msg.time }}#}
-{#            {% if msg.is_delete %}#}
-{#                <a href="{% url 'delete' room_id msg.id %}"><i class="fa fa-trash"></i> </a>#}
-{#            {% endif %}#}
-{##}
-{#            <br />#}
-{#        {% endfor %}#}
-{#        <a name="bottom"></a>#}
-{#    </div>#}
-{#</div>#}
 <div id="chat-elements">
     <div id="chat-log">
-    <button onClick="window.location.reload();">Refresh Page</button>
-
-{#            <img src="/media/{{ i.image }}" alt="ia" width="200px" height="200px">#}
         {% for msg,isg in context.messages.items %}
+            {{ context.messages }}
             <center>{{ msg }}</center>
             <br>
             {% for i in isg  %}
@@ -53,17 +26,16 @@
                 {{ i.time }}
                 {{ i.text }}
                 {% if i.is_delete %}
-
                     <a href="{% url 'chat:delete' context.room_id i.id %}"><i class="fa fa-trash"></i> Delete message </a>
                 {% endif %}
                 {% if i.document %}e
-                     <a href="/media/{{ i.document}}" target="_blank" class="btn btn-primary" > {{ i.document }}</a>
+                    <a href="/media/{{ i.document}}" target="_blank" class="btn btn-primary" > {{ i.document }}</a>
 
                 {% endif %}
                 {% if i.image %}
                     {{ i.image }}
                     <img src="/media/{{ i.image }}" alt="Image" height="200px" width="200px">
-               <br />
+                    <br />
                 {% endif %}
                 <br /><br />
             {% endfor %}
@@ -74,30 +46,30 @@
 </div>
 
 {% if request.user.is_staff %}
-<div id="chat-input-area">
-    <form id="send-form" action="{% url 'chat:message' context.room_id %}"  method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table style="width: 100%">
-            <input type="hidden" name="from" value="{{ user }}">
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <tr style="width: 100%">
-                <td style="width: 50%">
-                    <input type="text" id="chat-input" autocomplete="off" placeholder="Say something" name="text" id="text"/>
-                </td>
-                <td style="width: 16%">
-                    <input type="file" name="image" accept="image/*" id="image">
-                </td>
-                <td style="width: 16%">
-                    <input type="file" name="file" accept="image/*" id="file">
-                </td>
-                <td style="width: 16%">
-                    <input type="submit" id="chat-send-button" value="Send" />
+    <div id="chat-input-area">
+        <form id="send-form" action="{% url 'chat:message' context.room_id %}"  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table style="width: 100%">
+                <input type="hidden" name="from" value="{{ user }}">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <tr style="width: 100%">
+                    <td style="width: 50%">
+                        <input type="text" id="chat-input" autocomplete="off" placeholder="Say something" name="text" id="text"/>
+                    </td>
+                    <td style="width: 16%">
+                        <input type="file" name="image" accept="image/*" id="image">
+                    </td>
+                    <td style="width: 16%">
+                        <input type="file" name="file" accept="image/*" id="file">
+                    </td>
+                    <td style="width: 16%">
+                        <input type="submit" id="chat-send-button" value="Send" />
 
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 {% endif %}
 {% for user in username %}
     <a href="{% url 'view' user %}"> {{ user }} </a>

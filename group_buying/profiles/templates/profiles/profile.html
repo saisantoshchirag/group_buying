@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel = "shortcut icon" href ="{% static 'download.png' %}" type = "image/png">
-    {#        <link rel="stylesheet" href="{% static "main.css" %}">#}
+
 
     <style>
         h3{
@@ -34,13 +34,13 @@
     </style>
 {% endblock headblock %}
 {% block content %}
-    <center>
-        <img src="{{ user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
-        <h3>{{ user.userprofile.city }}</h3>
-        <h3>{{ user.userprofile.state }}</h3>
-        <h3>{{ user.userprofile.phone_number }}</h3>
-        <h3>{{ user.userprofile.pincode }}</h3>
-        <h3>{{ user.userprofile.gender }}</h3>
+    <center>{{ user.email }}
+        <img src="{{ req_user.userprofile.image.url }}" height="200px" width="200px" style="margin-left: 10px;margin-top: 10px;border-radius: 50%">
+        <h3>{{ req_user.userprofile.city }}</h3>
+        <h3>{{ req_user.userprofile.state }}</h3>
+        <h3>{{ req_user.userprofile.phone_number }}</h3>
+        <h3>{{ req_user.userprofile.pincode }}</h3>
+        <h3>{{ req_user.userprofile.gender }}</h3>
         {% if is_user %}
             <a href="{% url 'update' %}"><button class="btn1"> Edit Profile</button> </a><br>
             {% if is_phone_verified %}
@@ -49,12 +49,4 @@
                 <a href="{% url 'verify_phone' %}"><button class="btn1"> Verify Phone Number</button> </a>
             {% endif %}
         {% endif %}
-        {#    {% for use in user %}#}
-        {#        {{ use.gender }}#}
-        {#        {{ use.city }}#}
-        {#        {{ use.state }}#}
-        {#        {{ use.pincode }}#}
-        {#        {{ use.phonenumber }}#}
-        {#        <img src="{{ use.image.url }}">#}
-        {#    {% endfor %}#}
 {% endblock content %}

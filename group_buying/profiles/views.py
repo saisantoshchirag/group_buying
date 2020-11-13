@@ -8,11 +8,11 @@ from django.utils.crypto import get_random_string
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from chat.extras import profile_exists
 
 @login_required(login_url='/loginmodule/login/')
 def update(request):
     current_user = UserProfile.objects.filter(user=request.user).values()
-    cur_gender = current_user[0].get('gender')
     cur_state = current_user[0].get('state')
     cur_pincode = current_user[0].get('pincode')
     cur_city = current_user[0].get('city')
@@ -29,10 +29,6 @@ def update(request):
             except:
                 pass
             try:
-                UserProfile.objects.filter(user=request.user).update(gender=request.POST['gender'])
-            except:
-                UserProfile.objects.filter(user=request.user).update(gender=cur_gender)
-            try:
                 UserProfile.objects.filter(user=request.user).update(city=request.POST['city'])
             except:
                 UserProfile.objects.filter(user=request.user).update(city=cur_city)
@@ -47,7 +43,7 @@ def update(request):
             return redirect('view',name=request.user)
     else:
         form = UpdateForm()
-    return render(request,'profiles/update.html',{'form':form})
+    return render(request,'profiles/update_new.html',{'form':form})
 
 @login_required(login_url='/loginmodule/login/')
 def profile(request,name):
@@ -55,12 +51,14 @@ def profile(request,name):
     userprofile = user[0]['id']
     user = UserProfile.objects.filter(user_id=userprofile).values()
     is_user = name==str(request.user)
-    if not user and is_user:
+    if not profile_exists(request.user):
         return redirect('create')
     if not user and not is_user:
         messages.success(request, 'Profile Doesnot exist')
         return redirect('home')
-    return render(request,'profiles/profile.html',{'user':request.user,'is_user':is_user,'is_phone_verified':user[0]['phone_verified']})
+    user1 = User.objects.filter(username=name).values()
+
+    return render(request,'profiles/profile_new.html',{'req_user':request.user,'user':user1[0],'is_user':is_user,'is_phone_verified':user[0]['phone_verified']})
 
 @login_required(login_url='/loginmodule/login/')
 def create(request):

@@ -6,39 +6,49 @@
 
 
 {% block content %}
-    <br><br>
-    <div class="container marketing">
+    <br>
+    <div class="container">
         <div class="row">
             {% for room in rooms %}
-                <div class="col-lg-4">
-                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-                    <h2> {{ room.name }}</h2>
-                    {% if room_user %}
+                <div class="col-sm-2">
+                    <div class="card" style="width: 25rem;height: 250px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"><span style="font-weight: bold">Location: </span>{{ room.location }}</h6>
+                            <p class="card-text"><span style="font-weight: bold">Brand: </span>{{ room.brand }}</p>
+                            <p  class="card-text"><span style="font-weight: bold">Vehicle: </span>{{ room.vehicle }}</p>
+                            <p  class="card-text"><span style="font-weight: bold">Room size: </span>{{ room.max_limit }}</p>
+                            {% if room_user %}
+                                {% for chat_room in room_user %}
+                                    {% if chat_room == room.eid|add:"0" %}
+                                        <button type="button" class="btn btn-primary btn-sm">                        <a href="{% url 'chat:home' room.id %}" style="text-align: center;color: black">Go to room</a>
+                                        </button>
+                                    {% else %}
 
-                        {% for chat_room in room_user %}
-                            {% if chat_room == room.eid|add:"0" %}
-                                <a href="{% url 'chat:home' room.id %}">  <h1>Go to room</h1> </a>
+                                    {% endif %}
+                                {% endfor %}
                             {% else %}
-
+                                <a href="{% url 'chat:join' room.eid %}"> join</a>
                             {% endif %}
-                        {% endfor %}
 
-                    {% else %}
-                        <a href="{% url 'chat:join' room.eid %}"> join</a>
-                    {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
                 </div>
             {% endfor %}
         </div>
     </div>
+    <br><br>
     {% if request.user.is_staff or request.user.dealer.kyc_verified%}
 
         <div class="container marketing">
             <div class="row">
                 <div class="col-lg-4">
 
-                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-                    <h2><a href="{% url 'chat:create' %}"> Create Room </a></h2>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">  <a href="{% url 'chat:create' %}" style="color: black"> Create Room </a></button>
+                    </div>
                 </div>
             </div>
         </div>

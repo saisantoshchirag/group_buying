@@ -63,7 +63,6 @@ def auth_view(request):
     user = auth.authenticate(username=username, password=password)
     if user is not None:
         auth.login(request, user)
-        messages.success(request, 'You are Logged in.')
         try:
             UserProfile.objects.filter(user=request.user)
         except:

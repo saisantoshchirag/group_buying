@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Orders(models.Model):
     order_id = models.AutoField(primary_key=True)
@@ -7,7 +7,7 @@ class Orders(models.Model):
     razorpayid = models.CharField(max_length=255,default="")
     razorpaypaymentid = models.CharField(max_length=255,default="")
     razorpaysignature = models.CharField(max_length=255, default="")
-
+    user= models.ForeignKey(User,on_delete=models.PROTECT)
 
 class OrderUpdate(models.Model):
     update_id = models.AutoField(primary_key=True)

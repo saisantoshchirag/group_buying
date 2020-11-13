@@ -7,23 +7,25 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages as Messgs
 import datetime
 from .extras import is_admin,is_dealer,profile_exists
-import json
+
 def home(request, room_id):
     user = UserProfile.objects.filter(user=request.user).values()
-    use1 = UserProfile.objects.filter(user=request.user,subscription_end__gte=datetime.datetime.now()).values()
-    if int(room_id) not in user[0]['joined']:
-        Messgs.success(request,'You are not part of this room. Please join your room')
-        return redirect('chat:rooms')
-    if not (is_admin(request.user) or is_dealer(request.user)):
-        if not user[0]['is_subscribed'] :
-            return redirect('payment:Checkout')
-    try:
-        subs =  use1[0]
-    except:
-        UserProfile.objects.filter(user=request.user).update(is_subscribed=False,joined=[])
-        ChatUser.objects.filter(user=request.user).delete()
-        Messgs.success(request,'Sub ended renew')
-        return redirect('payment:Checkout')
+    if not is_admin(request.user):
+        use1 = UserProfile.objects.filter(user=request.user,subscription_end__gte=datetime.datetime.now()).values()
+        if int(room_id) not in user[0]['joined']:
+            Messgs.success(request,'You are not part of this room. Please join your room')
+            return redirect('chat:rooms')
+        if not (is_admin(request.user) or is_dealer(request.user)):
+            if not user[0]['is_subscribed'] :
+                return redirect('payment:Checkout')
+        try:
+            subs =  use1[0]
+        except:
+            if not use1[0]['is_admin']:
+                UserProfile.objects.filter(user=request.user).update(is_subscribed=False,joined=[])
+                ChatUser.objects.filter(user=request.user).delete()
+                Messgs.success(request,'Sub ended renew')
+                return redirect('payment:Checkout')
     if user:
         try:
             result = {}
@@ -33,8 +35,6 @@ def home(request, room_id):
             for i in range(len(chat_users)):
                 userss = User.objects.filter(id=chat_users[i]['user_id']).values()
                 usernames.append(userss[0]['username'])
-                # print(chat_users[i])
-
             cmsgs = ChatMessage.objects.filter(room=room).order_by('date')[:50].values()
             msgs = []
             for msg in cmsgs:
@@ -47,7 +47,7 @@ def home(request, room_id):
         except ChatRoom.DoesNotExist:
             msgs = []
         context1 = {'room_id':room_id,'messages':result,'user':user}
-        return render(request, 'chat/chat.html', {'context':context1,'username':usernames})
+        return render(request, 'chat/cahtroom.html', {'context':context1,'username':usernames})
     else:
         context = {}
         context['room_id'] = room_id or 'default'
@@ -101,8 +101,7 @@ def rooms(request):
         return redirect('create')
     room = UserProfile.objects.filter(user=request.user).values()[0]['room_id']
     joined_rooms = UserProfile.objects.filter(user=request.user).values()[0]['joined']
-    if room is None:
-        room = ''
+
     rooms = ChatRoom.objects.all().values()
     user = User.objects.filter(username=request.user)
     is_staff = user.values()[0]['is_staff']
@@ -141,6 +140,9 @@ def create_room(request):
         ChatRoom.objects.create(eid=id+1,name=name,max_limit = limit,location=location,brand = brand,vehicle=vehicle)
         rooms = ChatRoom.objects.filter(eid=id+1)
         ChatUser.objects.create(chat=rooms[0], user=request.user)
+        for i in UserProfile.objects.filter(is_admin=True):
+            print(i)
+            ChatUser.objects.create(chat=rooms[0],user_id=i['user_id'])
         joined_rooms = UserProfile.objects.get(user=request.user).joined
         if not joined_rooms:
             joined_rooms = []

@@ -26,7 +26,7 @@ def app_create(request):
         notes = {'Shipping address': address}
         razorpay_order = razorpay_client.order.create(dict(amount=order_amount*100, currency=order_currency, receipt=order_receipt, notes=notes, payment_capture='0'))
         print(razorpay_order['id'])
-        order = Orders(amount=order_amount, razorpayid=razorpay_order['id'])   # saving in dataset just like by using python as in shell
+        order = Orders(amount=order_amount, razorpayid=razorpay_order['id'],user=request.user)   # saving in dataset just like by using python as in shell
         order.save()
         return render(request, 'payment/payment.html', {'order_id': razorpay_order['id'], 'cname': name, 'cemail': email,'cphone':phone})
 
